@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "715182510132",
+    "project_id": "sterne-542ac",
+    "storage_bucket": "sterne-542ac.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:715182510132:android:8712f0bd0974828347fa61",
+        "android_client_info": {
+          "package_name": "com.foivoslazaridis.sterne_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDF5wLF1deqyFkHG9FrETBlb-okh4PmvgY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
