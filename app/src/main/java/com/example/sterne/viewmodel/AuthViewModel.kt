@@ -42,4 +42,21 @@ class AuthViewModel : ViewModel() {
             }
         }
     }
+
+    fun verifyEmailAddress(onResult: (Boolean, String) -> Unit) {
+        val user = auth.currentUser
+
+        if (user != null){
+            user.sendEmailVerification()
+                .addOnCompleteListener {
+                    if (it.isSuccessful){
+                        onResult(true, "Email sent")
+                    }else{
+                        onResult(false, it.exception?.message ?: "Unknown error")
+                    }
+                }
+        }else{
+            onResult(false, "User not found")
+        }
+    }
 }
