@@ -20,7 +20,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             SterneTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-
+                        AppNavigation(Modifier.padding(innerPadding))
                 }
             }
         }
