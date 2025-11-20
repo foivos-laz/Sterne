@@ -6,6 +6,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.sterne.screen.AuthScreen
+import com.example.sterne.screen.HomeScreen
+import com.example.sterne.screen.LogInScreen
+import com.example.sterne.screen.SignUpScreen
 
 @Composable
 fun AppNavigation(modifier: Modifier = Modifier) {
@@ -14,7 +17,19 @@ fun AppNavigation(modifier: Modifier = Modifier) {
 
     NavHost(navController = navController, startDestination = "auth"){
         composable("auth"){
-            AuthScreen(modifier)
+            AuthScreen(modifier, navController)
+        }
+
+        composable("signup"){
+            SignUpScreen(modifier, navController)
+        }
+
+        composable("login"){
+            LogInScreen(modifier, navController)
+        }
+
+        composable("home"){
+            HomeScreen(modifier)
         }
 
     }
