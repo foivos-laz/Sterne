@@ -9,13 +9,18 @@ import com.example.sterne.screen.AuthScreen
 import com.example.sterne.screen.HomeScreen
 import com.example.sterne.screen.LogInScreen
 import com.example.sterne.screen.SignUpScreen
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 
 @Composable
 fun AppNavigation(modifier: Modifier = Modifier) {
 
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = "auth"){
+    val isLoggedIn = Firebase.auth.currentUser!=null
+    val  firstPage = if(isLoggedIn) "home" else "auth"
+
+    NavHost(navController = navController, startDestination = firstPage){
         composable("auth"){
             AuthScreen(modifier, navController)
         }

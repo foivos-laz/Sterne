@@ -39,7 +39,7 @@ fun AuthScreen(modifier: Modifier = Modifier, navController: NavController) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Image(painter = painterResource(id = R.drawable.hera_logo_with_circle), contentDescription = "Logo",
+            Image(painter = painterResource(id = R.drawable.hera_logo_transparent_beige_preview), contentDescription = "Logo",
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(250.dp))
