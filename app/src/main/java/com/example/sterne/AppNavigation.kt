@@ -8,7 +8,9 @@ import androidx.navigation.compose.rememberNavController
 import com.example.sterne.screen.AuthScreen
 import com.example.sterne.screen.HomeScreen
 import com.example.sterne.screen.LogInScreen
+import com.example.sterne.screen.SettingsScreen
 import com.example.sterne.screen.SignUpScreen
+import com.example.sterne.screen.TutorialScreen
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 
@@ -34,8 +36,15 @@ fun AppNavigation(modifier: Modifier = Modifier) {
         }
 
         composable("home"){
-            HomeScreen(modifier)
+            HomeScreen(modifier, navController)
         }
 
+        composable("settings"){
+            SettingsScreen(modifier, navController)
+        }
+
+        composable("tutorial"){
+            TutorialScreen(modifier, navController)
+        }
     }
 }

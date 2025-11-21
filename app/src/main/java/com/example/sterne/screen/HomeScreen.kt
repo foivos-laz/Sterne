@@ -1,55 +1,85 @@
 package com.example.sterne.screen
 
-import android.widget.Toast
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material.icons.filled.Phone
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.sterne.viewmodel.AuthViewModel
-import com.google.firebase.Firebase
-import com.google.firebase.auth.auth
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.navigation.NavController
+import com.example.sterne.pages.AISpeakPage
+import com.example.sterne.pages.HomePage
+import com.example.sterne.pages.LocationServices
+import com.example.sterne.pages.PanicButtonPage
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier, authViewModel: AuthViewModel = viewModel()) {
+fun HomeScreen(modifier: Modifier = Modifier, navController: NavController) {
 
-    var context = LocalContext.current
+    val navItemList = listOf(
+        NavItem("Home", Icons.Default.Home),
+        NavItem("AI Speak", Icons.Default.Phone),
+        NavItem("Panic Button", Icons.Default.Warning),
+        NavItem("Location", Icons.Default.LocationOn),
+        //NavItem("Settings", Icons.Default.Settings)
+    )
 
-    Column(modifier = Modifier.fillMaxSize()
-        .padding(32.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Text(text = "Home screen")
+    var selectedIndex by remember { mutableStateOf(0) }
 
-        Spacer(modifier = Modifier.height(20.dp))
-
-        Button(onClick = {
-            Firebase.auth.signOut()
-        }) {
-            Text(text = "Log out")
+    Scaffold(bottomBar = {
+        NavigationBar(
+            containerColor = Color(0xFF67282D)
+        ) {
+            navItemList.forEachIndexed { index, navItem ->
+                NavigationBarItem(selected = index == selectedIndex,
+                    onClick = {
+                        selectedIndex = index
+                    },
+                    icon = {
+                        Icon(imageVector = navItem.icon, contentDescription = navItem.label)
+                    },
+                    label = {
+                        Text(text = navItem.label)
+                    },
+                    colors = NavigationBarItemDefaults.colors(
+                        selectedIconColor = Color(0xFFF6E9CF),
+                        selectedTextColor = Color(0xFFF6E9CF),
+                        unselectedIconColor = Color(0xFFF6E9CF),
+                        unselectedTextColor = Color(0xFFF6E9CF),
+                        indicatorColor = Color(0xFFA13C43)
+                    )) }
         }
-
-        Button(onClick = {
-            authViewModel.verifyEmailAddress { success, message ->
-                if (success) {
-                    Toast.makeText(context, message ?: "Email sent successfully", Toast.LENGTH_SHORT).show()
-                    // Email sent successfully
-                } else {
-                    Toast.makeText(context, message ?: "Error occurred while sending email", Toast.LENGTH_SHORT).show()
-                    // Error occurred while sending email
-                }}
-        }) {
-            Text(text = "Verify Email")
-        }
+    }) {
+        ContentScreen(modifier = Modifier.padding(it), selectedIndex, navController)
     }
 }
+
+@Composable
+fun ContentScreen(modifier: Modifier = Modifier, selectedIndex: Int, navController : NavController) {
+    when (selectedIndex) {
+        0 -> HomePage(modifier, navController)
+        1 -> AISpeakPage(modifier)
+        2 -> PanicButtonPage(modifier)
+        3 -> LocationServices(modifier)
+        //4 -> SettingsPage(modifier)
+    }
+}
+
+data class NavItem(
+    val label: String,
+    val icon: ImageVector
+)
