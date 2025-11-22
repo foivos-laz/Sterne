@@ -5,7 +5,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Phone
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -80,7 +79,7 @@ fun ContentScreen(modifier: Modifier = Modifier, selectedIndex: Int, navControll
     when (selectedIndex) {
         0 -> HomePage(modifier, navController)
         1 -> AISpeakPage(modifier, navController)
-        2 -> PanicButtonPage(modifier, navController)
+        2 -> PanicButtonPage(modifier)
         3 -> LocationServices(modifier, navController)
     }
 }

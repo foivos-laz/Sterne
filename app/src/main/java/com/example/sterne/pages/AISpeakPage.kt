@@ -37,7 +37,6 @@ import com.example.sterne.createLocalizedContext
 
 @Composable
 fun AISpeakPage(modifier: Modifier = Modifier, navController : NavController) {
-
     val context = LocalContext.current
 
     val language = LocalAppLanguage.current

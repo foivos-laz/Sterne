@@ -49,4 +49,11 @@
     <string name="AICallSCRText4">Mute</string>
     <string name="AICallSCRText5">End</string>
     <string name="AICallSCRText6">Add</string>
+    <string name="panicPgText1">Panic Button</string>
+    <string name="panicPgText2">The panic button calls the police or a number of your choice the moment you press it, so you don\'t have to do it yourself</string>
+    <string name="panicPgText3">Unnecessary calls to the police may carry penalties!</string>
+    <string name="panicPgText4">Click here to change the number the button calls!</string>
+    <string name="panicPgDlgText1">Change number</string>
+    <string name="panicPgDlgText2">Save</string>
+    <string name="panicPgDlgText3">Cancel</string>
 </resources>

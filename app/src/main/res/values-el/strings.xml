@@ -49,4 +49,11 @@
     <string name="AICallSCRText4">Σίγαση</string>
     <string name="AICallSCRText5">Τερματισμός</string>
     <string name="AICallSCRText6">Πρόσθεσε</string>
+    <string name="panicPgText1">Κουμπί Πανικού</string>
+    <string name="panicPgText2">Το κουμπί πανικού καλεί την αστυνομία ή έναν αριθμό της επιλογής σας τη στιγμή που το πατάτε, ώστε να μην χρειάζεται να το κάνετε μόνοι σας</string>
+    <string name="panicPgText3">Οι άσκοπες κλήσεις στην αστυνομία ενδέχεται να επισύρουν κυρώσεις!</string>
+    <string name="panicPgText4">Κάντε κλικ εδώ για να αλλάξετε τον αριθμό που καλεί το κουμπί!</string>
+    <string name="panicPgDlgText1">Αλλαγή νούμερου</string>
+    <string name="panicPgDlgText2">Αποθήκευση</string>
+    <string name="panicPgDlgText3">Ακύρωση</string>
 </resources>

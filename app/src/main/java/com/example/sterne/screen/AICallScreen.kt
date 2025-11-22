@@ -51,10 +51,6 @@ fun AICallScreen(modifier: Modifier = Modifier, navController: NavController) {
     var running by remember { mutableStateOf(true) }
     var elapsedSeconds by remember { mutableStateOf(0L) }
 
-    val language = LocalAppLanguage.current
-    val context = LocalContext.current
-    val localizedContext = remember(language) { context.createLocalizedContext(language) }
-
     Column(modifier = Modifier
         .fillMaxSize()
         .background(Color(0xFFF6E9CF))) {
