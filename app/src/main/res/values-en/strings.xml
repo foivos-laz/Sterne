@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">HERA</string>
     <string name="authText1">Your safety all in one app</string>
@@ -19,7 +20,7 @@
     <string name="regBox4">Password</string>
     <string name="regButton">Register</string>
     <string name="regText3">Already have an account?</string>
-    <string name="regText4">Log in!</string>
+    <string name="regText4">" Log in!"</string>
     <string name="loginButton2">Logging in...</string>
     <string name="regButton2">Creating Account...</string>
     <string name="homePgText2">Explore the tutorial to see what the app offers! Tap Settings to customize everything!</string>

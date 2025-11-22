@@ -72,9 +72,9 @@ fun HomeScreen(modifier: Modifier = Modifier, navController: NavController) {
 fun ContentScreen(modifier: Modifier = Modifier, selectedIndex: Int, navController : NavController) {
     when (selectedIndex) {
         0 -> HomePage(modifier, navController)
-        1 -> AISpeakPage(modifier)
-        2 -> PanicButtonPage(modifier)
-        3 -> LocationServices(modifier)
+        1 -> AISpeakPage(modifier, navController)
+        2 -> PanicButtonPage(modifier, navController)
+        3 -> LocationServices(modifier, navController)
         //4 -> SettingsPage(modifier)
     }
 }

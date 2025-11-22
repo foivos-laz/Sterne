@@ -1,8 +1,8 @@
 package com.example.sterne.screen
 
+import android.content.res.Configuration
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,11 +16,13 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -32,13 +34,23 @@ import com.example.sterne.R
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.example.sterne.viewmodel.AuthViewModel
+import java.util.Locale
 
 @Composable
-fun SettingsScreen(modifier: Modifier = Modifier, navController: NavController) {
+fun SettingsScreen(modifier: Modifier = Modifier, navController: NavController, onToggleLanguage: () -> Unit) {
 
     val user = Firebase.auth.currentUser
     val emailAddressChecker = user?.isEmailVerified
     var context = LocalContext.current
+    val LocalAppLanguage = staticCompositionLocalOf { "en" }
+
+    val language = LocalAppLanguage.current
+
+    val localizedContext = remember(language) {
+        val config = Configuration(context.resources.configuration)
+        config.setLocale(Locale.forLanguageTag(language))
+        context.createConfigurationContext(config)
+    }
 
     Column(modifier = Modifier.fillMaxSize()
         .background(Color(0xFFF6E9CF))){
@@ -48,7 +60,7 @@ fun SettingsScreen(modifier: Modifier = Modifier, navController: NavController) 
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Text(text = "Settings", style = TextStyle(
+            Text(text = stringResource(id = R.string.homePgButton2), style = TextStyle(
                 fontSize = 30.sp,
                 fontFamily = FontFamily.Monospace,
                 fontWeight = FontWeight.ExtraBold,
@@ -60,7 +72,7 @@ fun SettingsScreen(modifier: Modifier = Modifier, navController: NavController) 
             Spacer(modifier = Modifier.height(20.dp))
 
             if (emailAddressChecker == false){
-                Text(text = "To verify your email address, click the button below", style = TextStyle(
+                Text(text = stringResource(id = R.string.settingsText2), style = TextStyle(
                     fontSize = 15.sp,
                     fontFamily = FontFamily.Monospace,
                     fontWeight = FontWeight.Thin,
@@ -75,10 +87,10 @@ fun SettingsScreen(modifier: Modifier = Modifier, navController: NavController) 
                     val authViewModel = AuthViewModel()
                     authViewModel.verifyEmailAddress { success, message ->
                         if (success) {
-                            Toast.makeText(context, message ?: "Email sent successfully", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "Email sent successfully", Toast.LENGTH_SHORT).show()
                             // Email sent successfully
                         } else {
-                            Toast.makeText(context, message ?: "Error occurred while sending email", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "Error occurred while sending email", Toast.LENGTH_SHORT).show()
                             // Error occurred while sending email
                         }}
                 },
@@ -86,7 +98,7 @@ fun SettingsScreen(modifier: Modifier = Modifier, navController: NavController) 
                     modifier = Modifier.fillMaxWidth()
                         .height(40.dp)
                 ){
-                    Text(text = "Verify Email Address", style = TextStyle(
+                    Text(text = stringResource(id = R.string.settingsButton1), style = TextStyle(
                         fontSize = 15.sp,
                         fontFamily = FontFamily.Monospace,
                         fontWeight = FontWeight.SemiBold,
@@ -99,7 +111,7 @@ fun SettingsScreen(modifier: Modifier = Modifier, navController: NavController) 
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            Text(text = "Click the button below to log out", style = TextStyle(
+            Text(text = stringResource(id = R.string.settingsText3), style = TextStyle(
                 fontSize = 15.sp,
                 fontFamily = FontFamily.Monospace,
                 fontWeight = FontWeight.Thin,
@@ -121,7 +133,7 @@ fun SettingsScreen(modifier: Modifier = Modifier, navController: NavController) 
                 modifier = Modifier.fillMaxWidth()
                     .height(40.dp)
             ){
-                Text(text = "Sign Out", style = TextStyle(
+                Text(text = stringResource(id = R.string.settingsButton2), style = TextStyle(
                     fontSize = 15.sp,
                     fontFamily = FontFamily.Monospace,
                     fontWeight = FontWeight.SemiBold,
@@ -133,7 +145,37 @@ fun SettingsScreen(modifier: Modifier = Modifier, navController: NavController) 
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            Text(text = "Click the button below to return back to the home screen", style = TextStyle(
+            Text(text = stringResource(id = R.string.settingsText5), style = TextStyle(
+                fontSize = 15.sp,
+                fontFamily = FontFamily.Monospace,
+                fontWeight = FontWeight.Thin,
+                textAlign = TextAlign.Center
+            ),
+                color = Color(0xFF67282D)
+            )
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            OutlinedButton(onClick = {
+                onToggleLanguage()
+            },
+                border = BorderStroke(1.dp, Color(0xFF67282D)),
+                modifier = Modifier.fillMaxWidth()
+                    .height(40.dp)
+            ){
+                Text(text = stringResource(id = R.string.settingsButton4), style = TextStyle(
+                    fontSize = 15.sp,
+                    fontFamily = FontFamily.Monospace,
+                    fontWeight = FontWeight.SemiBold,
+                    textAlign = TextAlign.Center
+                ),
+                    color = Color(0xFF67282D)
+                )
+            }
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            Text(text = stringResource(id = R.string.settingsText4), style = TextStyle(
                 fontSize = 15.sp,
                 fontFamily = FontFamily.Monospace,
                 fontWeight = FontWeight.Thin,
@@ -153,7 +195,7 @@ fun SettingsScreen(modifier: Modifier = Modifier, navController: NavController) 
                 modifier = Modifier.fillMaxWidth()
                     .height(40.dp)
             ){
-                Text(text = "Return to Home", style = TextStyle(
+                Text(text = stringResource(id = R.string.settingsButton3), style = TextStyle(
                     fontSize = 15.sp,
                     fontFamily = FontFamily.Monospace,
                     fontWeight = FontWeight.SemiBold,

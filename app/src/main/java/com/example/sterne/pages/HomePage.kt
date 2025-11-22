@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -45,7 +46,7 @@ fun HomePage(modifier: Modifier = Modifier, navController: NavController) {
 
             //Spacer(modifier = Modifier.height(10.dp))
 
-            Text(text = "Your safety all in one app", style = TextStyle(
+            Text(text = stringResource(id = R.string.authText1), style = TextStyle(
                 fontSize = 20.sp,
                 fontFamily = FontFamily.Monospace,
                 fontWeight = FontWeight.Bold,
@@ -56,7 +57,7 @@ fun HomePage(modifier: Modifier = Modifier, navController: NavController) {
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            Text(text = "Explore the tutorial to see what the app offers! Tap Settings to customize everything!", style = TextStyle(
+            Text(text = stringResource(id = R.string.homePgText2), style = TextStyle(
                 fontSize = 20.sp,
                 fontFamily = FontFamily.Monospace,
                 fontWeight = FontWeight.Thin,
@@ -74,7 +75,7 @@ fun HomePage(modifier: Modifier = Modifier, navController: NavController) {
                 modifier = Modifier.fillMaxWidth()
                     .height(60.dp)
             ){
-                Text(text = "Tutorial", style = TextStyle(
+                Text(text = stringResource(id = R.string.homePgButton1), style = TextStyle(
                     fontSize = 20.sp,
                     fontFamily = FontFamily.Monospace,
                     fontWeight = FontWeight.SemiBold,
@@ -93,7 +94,7 @@ fun HomePage(modifier: Modifier = Modifier, navController: NavController) {
                 modifier = Modifier.fillMaxWidth()
                     .height(60.dp)
             ){
-                Text(text = "Settings", style = TextStyle(
+                Text(text = stringResource(id = R.string.homePgButton2), style = TextStyle(
                     fontSize = 20.sp,
                     fontFamily = FontFamily.Monospace,
                     fontWeight = FontWeight.SemiBold,

@@ -26,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -36,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.sterne.R
 import com.example.sterne.viewmodel.AuthViewModel
 
 @Composable
@@ -56,7 +58,7 @@ fun SignUpScreen(modifier: Modifier = Modifier, navController: NavController, au
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "Hello! Pleased to meet you!",modifier = Modifier.fillMaxWidth(),
+            Text(text = stringResource(id = R.string.regText1),modifier = Modifier.fillMaxWidth(),
                 style = TextStyle(
                 fontSize = 30.sp,
                 fontFamily = FontFamily.Monospace,
@@ -67,7 +69,7 @@ fun SignUpScreen(modifier: Modifier = Modifier, navController: NavController, au
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            Text(text = "Create your account",modifier = Modifier.fillMaxWidth(),
+            Text(text = stringResource(id = R.string.regText2),modifier = Modifier.fillMaxWidth(),
                 style = TextStyle(
                 fontSize = 22.sp,
                 fontFamily = FontFamily.Monospace,
@@ -81,7 +83,7 @@ fun SignUpScreen(modifier: Modifier = Modifier, navController: NavController, au
             OutlinedTextField(
                 value = email,
                 onValueChange = { email = it },
-                label = { Text(text = "Email") },
+                label = { Text(text = stringResource(id = R.string.regBox1)) },
                 modifier = Modifier.fillMaxWidth(),
                 colors = TextFieldDefaults.colors(
                     focusedIndicatorColor = Color(0xFFF6E9CF),
@@ -101,7 +103,7 @@ fun SignUpScreen(modifier: Modifier = Modifier, navController: NavController, au
             OutlinedTextField(
                 value = username,
                 onValueChange = { username = it },
-                label = { Text(text = "Username") },
+                label = { Text(text = stringResource(id = R.string.regBox2)) },
                 modifier = Modifier.fillMaxWidth(),
                 colors = TextFieldDefaults.colors(
                     focusedIndicatorColor = Color(0xFFF6E9CF),
@@ -121,7 +123,7 @@ fun SignUpScreen(modifier: Modifier = Modifier, navController: NavController, au
             OutlinedTextField(
                 value = phoneNumber,
                 onValueChange = { phoneNumber = it },
-                label = { Text(text = "Phone Number") },
+                label = { Text(text = stringResource(id = R.string.regBox3)) },
                 modifier = Modifier.fillMaxWidth(),
                 colors = TextFieldDefaults.colors(
                     focusedIndicatorColor = Color(0xFFF6E9CF),
@@ -141,7 +143,7 @@ fun SignUpScreen(modifier: Modifier = Modifier, navController: NavController, au
             OutlinedTextField(
                 value = password,
                 onValueChange = { password = it },
-                label = { Text(text = "Password") },
+                label = { Text(text = stringResource(id = R.string.regBox4)) },
                 modifier = Modifier.fillMaxWidth(),
                 visualTransformation = PasswordVisualTransformation(),
                 colors = TextFieldDefaults.colors(
@@ -178,7 +180,7 @@ fun SignUpScreen(modifier: Modifier = Modifier, navController: NavController, au
                 modifier = Modifier.fillMaxWidth()
                     .height(60.dp)
             ){
-                Text(text = if (isLoading) "Creating Account..." else "Register", style = TextStyle(
+                Text(text = if (isLoading) stringResource(id = R.string.regButton2) else stringResource(id = R.string.regButton), style = TextStyle(
                     fontSize = 20.sp,
                     fontFamily = FontFamily.Monospace,
                     fontWeight = FontWeight.SemiBold,
@@ -194,7 +196,7 @@ fun SignUpScreen(modifier: Modifier = Modifier, navController: NavController, au
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center
             ) {
-                Text(text = "Already have an account?", style = TextStyle(
+                Text(text = stringResource(id = R.string.regText3), style = TextStyle(
                     fontSize = 15.sp,
                     fontFamily = FontFamily.Monospace,
                     fontWeight = FontWeight.Thin,
@@ -205,7 +207,7 @@ fun SignUpScreen(modifier: Modifier = Modifier, navController: NavController, au
 
                 Spacer(modifier = Modifier.width(5.dp))
 
-                Text(text = "Log in!",
+                Text(text = stringResource(id = R.string.regText4),
                     modifier = Modifier.clickable {
                     navController.navigate("login")
                 },

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">HERA</string>
+    <string name="authText1">Η ασφάλεια σας όλη σε μια εφαρμογή</string>
+    <string name="authText2">Παρακαλώ συνδεθείτε ή κάνετε εγγραφή</string>
+    <string name="authButton1">Εγγραφτείτε</string>
+    <string name="authButton2">Συνδεθείτε</string>
+    <string name="loginText1">Καλώς ήρθατε πίσω!</string>
+    <string name="loginText2">Παρακαλώ συνδεθείτε για να συνεχίσετε</string>
+    <string name="loginBox1">Email</string>
+    <string name="loginBox2">Κωδικός</string>
+    <string name="loginButton">Συνδεθείτε</string>
+    <string name="loginText3">Δεν έχετε λογαριασμό;</string>
+    <string name="loginText4">Δημιουργείστε έναν!</string>
+    <string name="regText1">Γεια σας! Χαιρόμαστε για την γνωριμία!</string>
+    <string name="regText2">Δημιουργείστε τον λογαριασμό σας</string>
+    <string name="regBox1">Email</string>
+    <string name="regBox2">Όνομα χρήστη</string>
+    <string name="regBox3">Νούμερο Τηλεφώνου</string>
+    <string name="regBox4">Κωδικός</string>
+    <string name="regButton">Εγγραφτείτε</string>
+    <string name="regText3">Έχετε ήδη λογαριασμό;</string>
+    <string name="regText4">Συνδεθείτε!</string>
+    <string name="loginButton2">Συνδέεστε...</string>
+    <string name="regButton2">Δημιουργείτε ο λογαριασμός...</string>
+    <string name="homePgText2">Εξερευνήστε τον οδηγό για να δείτε τι προσφέρει η εφαρμογή! Πατήστε Ρυθμίσεις για να προσαρμόσετε τα πάντα!</string>
+    <string name="homePgButton1">Οδηγός</string>
+    <string name="homePgButton2">Ρυθμίσεις</string>
+    <string name="settingsText2">Για να επαληθεύσετε τη διεύθυνση email σας, κάντε κλικ στο παρακάτω κουμπί</string>
+    <string name="settingsButton1">Επαλήθευση Διεύθυνσης Email</string>
+    <string name="settingsText3">Κάντε κλικ στο παρακάτω κουμπί για να αποσυνδεθείτε</string>
+    <string name="settingsButton2">Αποσύνδεση</string>
+    <string name="settingsText4">Κάντε κλικ στο παρακάτω κουμπί για να επιστρέψετε στην αρχική οθόνη</string>
+    <string name="settingsButton3">Επιστροφή στην Αρχική</string>
+    <string name="settingsButton4">EN</string>
+    <string name="settingsText5">Για να αλλάξετε τη γλώσσα, κάντε κλικ στο παρακάτω κουμπί</string>
+</resources>
