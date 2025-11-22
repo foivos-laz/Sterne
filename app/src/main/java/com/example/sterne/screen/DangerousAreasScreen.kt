@@ -1,5 +1,6 @@
 package com.example.sterne.screen
 
+import DangerousAreasViewModel
 import android.Manifest
 import android.content.pm.PackageManager
 import androidx.compose.foundation.background
@@ -18,7 +19,10 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -38,8 +42,8 @@ import com.mapbox.maps.MapView
 import com.mapbox.maps.Style
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.sterne.model.polygonModel
-import com.google.firebase.firestore.FirebaseFirestore
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.Point
@@ -50,23 +54,23 @@ import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.generated.FillLayer
 import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
-import com.mapbox.maps.extension.style.sources.getSource
 import com.mapbox.maps.extension.style.sources.getSourceAs
 import com.mapbox.maps.plugin.locationcomponent.location
-import com.mapbox.turf.TurfMeasurement
-import com.mapbox.turf.TurfConstants
+import kotlinx.coroutines.launch
 import kotlin.collections.map
 
 @Composable
-fun DangerousAreasScreen(modifier: Modifier = Modifier, navController: NavController) {
+fun DangerousAreasScreen(modifier: Modifier = Modifier, navController: NavController, viewModel: DangerousAreasViewModel = viewModel()) {
     val language = LocalAppLanguage.current
     val context = LocalContext.current
     val localizedContext = remember(language) { context.createLocalizedContext(language) }
 
-    Column(modifier = Modifier.fillMaxSize()
+    Column(modifier = Modifier
+        .fillMaxSize()
         .background(Color(0xFFF6E9CF))){
         Column(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
                 .padding(32.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
@@ -93,17 +97,28 @@ fun DangerousAreasScreen(modifier: Modifier = Modifier, navController: NavContro
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            MapScreen()
+            val polygons by viewModel.polygons.collectAsState()
+
+            val coroutineScope = rememberCoroutineScope()
+            MapScreen1(
+                polygons = polygons,
+                onUserLocationUpdate = { userPoint ->
+                    coroutineScope.launch {
+                        viewModel.fetchNearbyPolygons(userPoint)
+                    }
+                }
+            )
 
             Spacer(modifier = Modifier.height(20.dp))
 
             Button(onClick = {
                 navController.navigate("home"){
-                    popUpTo("tutorial") {inclusive = true}
+                    popUpTo("dangerousareas") {inclusive = true}
                 }
             },
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF67282D)),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
                     .height(40.dp)
             ){
                 Text(text = localizedContext.getString(R.string.dangerousScrButton1), style = TextStyle(
@@ -130,12 +145,11 @@ fun DangerousAreasScreen(modifier: Modifier = Modifier, navController: NavContro
             Spacer(modifier = Modifier.height(10.dp))
 
             Button(onClick = {
-                navController.navigate("home"){
-                    popUpTo("tutorial") {inclusive = true}
-                }
+                navController.popBackStack()
             },
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF67282D)),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
                     .height(40.dp)
             ){
                 Text(text = localizedContext.getString(R.string.settingsButton3), style = TextStyle(
@@ -152,105 +166,90 @@ fun DangerousAreasScreen(modifier: Modifier = Modifier, navController: NavContro
 }
 
 @Composable
-fun MapboxAndroidView(modifier: Modifier = Modifier) {
+fun MapboxAndroidView1(
+    modifier: Modifier = Modifier,
+    polygons: List<polygonModel>, // Receive state
+    onUserLocationUpdate: (Point) -> Unit // Callback to trigger fetch
+) {
     val context = LocalContext.current
     val mapView = remember { MapView(context) }
+
+    // Remember the listener to avoid re-attaching it on every recomposition.
+    val listener = remember { { userPoint: Point -> onUserLocationUpdate(userPoint) } }
 
     AndroidView(
         modifier = modifier,
         factory = { mapView },
         update = { mapViewInstance ->
-
             val mapboxMap = mapViewInstance.mapboxMap
-
             mapboxMap.loadStyle(Style.STANDARD) { style ->
-
-                // Enable user location
                 val locationPlugin = mapViewInstance.location
-                locationPlugin.updateSettings {
-                    enabled = true
-                    pulsingEnabled = true
-                }
+                locationPlugin.updateSettings { enabled = true; pulsingEnabled = true }
 
-                // Center camera on user & fetch nearby polygons
-                if (ActivityCompat.checkSelfPermission(
-                        context,
-                        Manifest.permission.ACCESS_FINE_LOCATION
-                    ) == PackageManager.PERMISSION_GRANTED
-                ) {
-                    locationPlugin.addOnIndicatorPositionChangedListener { userPoint ->
-
-                        // Center camera on user
-                        mapboxMap.setCamera(
-                            CameraOptions.Builder()
-                                .center(userPoint)
-                                .zoom(15.0)
-                                .build()
-                        )
-
-                        // --- FETCH POLYGONS WITHIN 1 KM ---
-                        fetchNearbyPolygons(userPoint) { nearbyPolygons ->
-
-                            val features = nearbyPolygons.map { polygon ->
-                                Feature.fromGeometry(Polygon.fromLngLats(listOf(polygon.points)))
-                            }
-
-                            val featureCollection = FeatureCollection.fromFeatures(features)
-
-                            // Add or update GeoJson source and FillLayer
-                            if (style.getSource("polygon-source") == null) {
-                                val geoJsonSource = GeoJsonSource.Builder("polygon-source")
-                                    .featureCollection(featureCollection)
-                                    .build()
-                                style.addSource(geoJsonSource)
-
-                                val fillLayer = FillLayer("polygon-layer", "polygon-source").apply {
-                                    fillColor(rgba(255.0, 0.0, 0.0, 0.33))       // semi-transparent red
-                                    fillOutlineColor(rgba(255.0, 0.0, 0.0, 1.0)) // solid red outline
-                                }
-                                style.addLayer(fillLayer)
-                            } else {
-                                style.getSourceAs<GeoJsonSource>("polygon-source")
-                                    ?.featureCollection(featureCollection)
-                            }
-                        }
+                if (checkLocationPermission(context)) {
+                    locationPlugin.addOnIndicatorPositionChangedListener(listener)
+                    locationPlugin.addOnIndicatorPositionChangedListener { point ->
+                        mapboxMap.setCamera(CameraOptions.Builder().center(point).zoom(15.0).build())
                     }
                 }
             }
+
+            // This part updates the map with new polygons whenever the state changes
+            updateMapWithPolygons(mapViewInstance, polygons)
         }
     )
 }
 
 @Composable
-fun MapScreen() {
+fun MapScreen1(
+    polygons: List<polygonModel>,
+    onUserLocationUpdate: (Point) -> Unit
+) {
     Box(
         modifier = Modifier
             .size(300.dp)
             .clip(RoundedCornerShape(20.dp))
             .border(2.dp, Color.Gray, RoundedCornerShape(20.dp))
     ) {
-        MapboxAndroidView(modifier = Modifier.fillMaxSize())  // no polygonDataList needed
+        MapboxAndroidView1(modifier = Modifier.fillMaxSize(), polygons = polygons, onUserLocationUpdate = onUserLocationUpdate)
     }
 }
 
-fun fetchNearbyPolygons(userLocation: Point, radiusKm: Double = 1.0, callback: (List<polygonModel>) -> Unit) {
-    FirebaseFirestore.getInstance().collection("polygons")
-        .get()
-        .addOnSuccessListener { snapshot ->
-            val nearby = snapshot.documents.mapNotNull { doc ->
-                val points = (doc["points"] as? List<Map<String, Any>>)?.map { p ->
-                    Point.fromLngLat(p["lng"] as Double, p["lat"] as Double)
-                } ?: return@mapNotNull null
+private fun updateMapWithPolygons(mapView: MapView, polygons: List<polygonModel>) {
+    val features = polygons.map { polygon ->
+        Feature.fromGeometry(Polygon.fromLngLats(listOf(polygon.points)))
+    }
+    val featureCollection = FeatureCollection.fromFeatures(features)
 
-                val centerMap = doc["center"] as? Map<String, Any>
-                val centerPoint = centerMap?.let { Point.fromLngLat(it["lng"] as Double, it["lat"] as Double) }
+    // The code inside this lambda is guaranteed to run only when the style is loaded.
+    mapView.mapboxMap.getStyle { style ->
+        // You can safely remove the 'isStyleLoaded' check.
+        val source = style.getSourceAs<GeoJsonSource>("polygon-source")
 
-                // Filter by distance
-                if (centerPoint != null) {
-                    val distanceKm = TurfMeasurement.distance(userLocation, centerPoint, "kilometers")
-                    if (distanceKm <= radiusKm) polygonModel(points, centerPoint) else null
-                } else null
-            }
-            callback(nearby)
+        if (source == null) {
+            // Source and layer don't exist, so create them.
+            style.addSource(
+                GeoJsonSource.Builder("polygon-source")
+                    .featureCollection(featureCollection)
+                    .build()
+            )
+            style.addLayer(
+                FillLayer("polygon-layer", "polygon-source").apply {
+                    fillColor(rgba(255.0, 0.0, 0.0, 0.33))
+                    fillOutlineColor(rgba(255.0, 0.0, 0.0, 1.0))
+                }
+            )
+        } else {
+            // Source already exists, just update its data.
+            source.featureCollection(featureCollection)
         }
+    }
+}
+
+
+private fun checkLocationPermission(context: android.content.Context): Boolean {
+    return ActivityCompat.checkSelfPermission(
+        context,
+        Manifest.permission.ACCESS_FINE_LOCATION
+    ) == PackageManager.PERMISSION_GRANTED
 }
