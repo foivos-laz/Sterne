@@ -34,4 +34,19 @@
     <string name="settingsButton3">Return to Home</string>
     <string name="settingsButton4">GR</string>
     <string name="settingsText5">To change the language click the button below</string>
+    <string name="authText3">To change the language to Greek press here!</string>
+    <string name="homeSCRText1">Home</string>
+    <string name="homeSCRText2">AI Speak</string>
+    <string name="homeSCRText3">Panic Button</string>
+    <string name="homeSCRText4">Location</string>
+    <string name="AICallPGText1">AI Speak</string>
+    <string name="AICallPGText2">Here by pressing the button below you will be able to speak to an AI agent, pretending it is your dad</string>
+    <string name="AICallPGText3">This feature requires internet access!</string>
+    <string name="AICallPGButton">Proceed to AI Speak</string>
+    <string name="AICallSCRText1">Speaker</string>
+    <string name="AICallSCRText2">Keypad</string>
+    <string name="AICallSCRText3">Output</string>
+    <string name="AICallSCRText4">Mute</string>
+    <string name="AICallSCRText5">End</string>
+    <string name="AICallSCRText6">Add</string>
 </resources>

@@ -29,6 +29,7 @@ import com.example.sterne.pages.AISpeakPage
 import com.example.sterne.pages.HomePage
 import com.example.sterne.pages.LocationServices
 import com.example.sterne.pages.PanicButtonPage
+import com.example.sterne.R
 
 @Composable
 fun HomeScreen(modifier: Modifier = Modifier, navController: NavController) {
@@ -38,11 +39,10 @@ fun HomeScreen(modifier: Modifier = Modifier, navController: NavController) {
     val localizedContext = remember(language) { context.createLocalizedContext(language) }
 
     val navItemList = listOf(
-        NavItem("Home", Icons.Default.Home),
-        NavItem("AI Speak", Icons.Default.Phone),
-        NavItem("Panic Button", Icons.Default.Warning),
-        NavItem("Location", Icons.Default.LocationOn),
-        //NavItem("Settings", Icons.Default.Settings)
+        NavItem(localizedContext.getString(R.string.homeSCRText1), Icons.Default.Home),
+        NavItem(localizedContext.getString(R.string.homeSCRText2), Icons.Default.Phone),
+        NavItem(localizedContext.getString(R.string.homeSCRText3), Icons.Default.Warning),
+        NavItem(localizedContext.getString(R.string.homeSCRText4), Icons.Default.LocationOn),
     )
 
     var selectedIndex by remember { mutableStateOf(0) }
@@ -82,7 +82,6 @@ fun ContentScreen(modifier: Modifier = Modifier, selectedIndex: Int, navControll
         1 -> AISpeakPage(modifier, navController)
         2 -> PanicButtonPage(modifier, navController)
         3 -> LocationServices(modifier, navController)
-        //4 -> SettingsPage(modifier)
     }
 }
 

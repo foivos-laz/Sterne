@@ -34,4 +34,19 @@
     <string name="settingsButton3">Επιστροφή στην Αρχική</string>
     <string name="settingsButton4">EN</string>
     <string name="settingsText5">Για να αλλάξετε τη γλώσσα, κάντε κλικ στο παρακάτω κουμπί</string>
+    <string name="authText3">Για να αλλάξετε την γλώσσα στα Αγγλικά πατήστε εδώ!</string>
+    <string name="homeSCRText1">Αρχική</string>
+    <string name="homeSCRText2">Ομιλία AI</string>
+    <string name="homeSCRText3">Panic Button</string>
+    <string name="homeSCRText4">Τοποθεσία</string>
+    <string name="AICallPGText1">Ομιλία AI</string>
+    <string name="AICallPGText2">Εδώ πατώντας το παρακάτω κουμπί θα μπορείτε να μιλήσετε με έναν πράκτορα Τεχνητής Νοημοσύνης, προσποιούμενος ότι είναι ο μπαμπάς σας</string>
+    <string name="AICallPGText3">Αυτή η λειτουργία απαιτεί σύνδεση με το διαδίκτυο!</string>
+    <string name="AICallPGButton">Προχωρήστε στην Ομιλία AI</string>
+    <string name="AICallSCRText1">Ηχείο</string>
+    <string name="AICallSCRText2">Πληκτρολόγιο</string>
+    <string name="AICallSCRText3">Έξοδος</string>
+    <string name="AICallSCRText4">Σίγαση</string>
+    <string name="AICallSCRText5">Τερματισμός</string>
+    <string name="AICallSCRText6">Πρόσθεσε</string>
 </resources>

@@ -43,6 +43,7 @@ import androidx.compose.material.icons.filled.PhoneBluetoothSpeaker
 import androidx.compose.material.icons.filled.Speaker
 import androidx.compose.ui.platform.LocalContext
 import com.example.myapp.LocalAppLanguage
+import com.example.sterne.R
 import com.example.sterne.createLocalizedContext
 
 @Composable
@@ -144,6 +145,10 @@ fun CallControls(
     val iconSize = 26.dp
     val circleSize = 70.dp
 
+    val language = LocalAppLanguage.current
+    val context = LocalContext.current
+    val localizedContext = remember(language) { context.createLocalizedContext(language) }
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -156,9 +161,9 @@ fun CallControls(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            ActionCircle(icon = Icons.Default.Speaker, text = "Speaker", circleSize, iconSize, mainColor, onSpeaker)
-            ActionCircle(icon = Icons.Default.Dialpad, text = "Keypad", circleSize, iconSize, mainColor, onKeypad)
-            ActionCircle(icon = Icons.Default.PhoneBluetoothSpeaker, text = "Output", circleSize, iconSize, mainColor, onOutput)
+            ActionCircle(icon = Icons.Default.Speaker, text = localizedContext.getString(R.string.AICallSCRText1), circleSize, iconSize, mainColor, onSpeaker)
+            ActionCircle(icon = Icons.Default.Dialpad, text = localizedContext.getString(R.string.AICallSCRText2), circleSize, iconSize, mainColor, onKeypad)
+            ActionCircle(icon = Icons.Default.PhoneBluetoothSpeaker, text = localizedContext.getString(R.string.AICallSCRText3), circleSize, iconSize, mainColor, onOutput)
         }
 
         Spacer(modifier = Modifier.height(30.dp))
@@ -168,12 +173,12 @@ fun CallControls(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            ActionCircle(icon = Icons.Default.MicOff, text = "Mute", circleSize, iconSize, mainColor, onMute)
+            ActionCircle(icon = Icons.Default.MicOff, text = localizedContext.getString(R.string.AICallSCRText4), circleSize, iconSize, mainColor, onMute)
 
             // End Call in Red Style
             ActionCircle(
                 icon = Icons.Default.CallEnd,
-                text = "End",
+                text = localizedContext.getString(R.string.AICallSCRText5),
                 size = circleSize,
                 iconSize = iconSize,
                 backgroundColor = endCallColor,
@@ -181,7 +186,7 @@ fun CallControls(
                 iconTint = Color.White
             )
 
-            ActionCircle(icon = Icons.Default.AddIcCall, text = "Add", circleSize, iconSize, mainColor, onOutput)
+            ActionCircle(icon = Icons.Default.AddIcCall, text = localizedContext.getString(R.string.AICallSCRText6), circleSize, iconSize, mainColor, onOutput)
         }
     }
 }

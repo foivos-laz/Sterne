@@ -42,7 +42,14 @@ fun AppNavigation(modifier: Modifier = Modifier) {
     CompositionLocalProvider(LocalAppLanguage provides currentLanguage) {
         NavHost(navController = navController, startDestination = firstPage){
             composable("auth"){
-                AuthScreen(modifier, navController)
+                AuthScreen(modifier, navController, onToggleLanguage = {
+                    val newLang = if (currentLanguage == "en") "el" else "en"
+
+                    // Save persistently
+                    scope.launch {
+                        LanguageDataStore.saveLanguage(context, newLang)
+                    }
+                })
             }
 
             composable("signup"){

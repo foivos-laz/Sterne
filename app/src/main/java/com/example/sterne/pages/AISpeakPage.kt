@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.myapp.LocalAppLanguage
+import com.example.sterne.R
 import com.example.sterne.createLocalizedContext
 
 @Composable
@@ -50,7 +51,7 @@ fun AISpeakPage(modifier: Modifier = Modifier, navController : NavController) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Text(text = "AI Speak", style = TextStyle(
+            Text(text = localizedContext.getString(R.string.AICallPGText1), style = TextStyle(
                 fontSize = 30.sp,
                 fontFamily = FontFamily.Monospace,
                 fontWeight = FontWeight.ExtraBold,
@@ -61,7 +62,7 @@ fun AISpeakPage(modifier: Modifier = Modifier, navController : NavController) {
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            Text(text = "Here by pressing the button below you will be able to speak to an AI agent, pretending it is your dad.", style = TextStyle(
+            Text(text = localizedContext.getString(R.string.AICallPGText2), style = TextStyle(
                 fontSize = 20.sp,
                 fontFamily = FontFamily.Monospace,
                 fontWeight = FontWeight.Thin,
@@ -72,7 +73,7 @@ fun AISpeakPage(modifier: Modifier = Modifier, navController : NavController) {
 
             Spacer(modifier = Modifier.height(15.dp))
 
-            Text(text = "This feature requires internet access!", style = TextStyle(
+            Text(text = localizedContext.getString(R.string.AICallPGText3), style = TextStyle(
                 fontSize = 12.sp,
                 fontFamily = FontFamily.Monospace,
                 fontWeight = FontWeight.Thin,
@@ -111,7 +112,7 @@ fun AISpeakPage(modifier: Modifier = Modifier, navController : NavController) {
                 modifier = Modifier.fillMaxWidth()
                     .height(60.dp)
             ){
-                Text(text = "Proceed to AI Speak", style = TextStyle(
+                Text(text = localizedContext.getString(R.string.AICallPGButton), style = TextStyle(
                     fontSize = 20.sp,
                     fontFamily = FontFamily.Monospace,
                     fontWeight = FontWeight.SemiBold,
