@@ -41,12 +41,18 @@ import androidx.compose.material.icons.filled.Dialpad
 import androidx.compose.material.icons.filled.MicOff
 import androidx.compose.material.icons.filled.PhoneBluetoothSpeaker
 import androidx.compose.material.icons.filled.Speaker
-import androidx.compose.material.icons.filled.VolumeUp
+import androidx.compose.ui.platform.LocalContext
+import com.example.myapp.LocalAppLanguage
+import com.example.sterne.createLocalizedContext
 
 @Composable
 fun AICallScreen(modifier: Modifier = Modifier, navController: NavController) {
     var running by remember { mutableStateOf(true) }
     var elapsedSeconds by remember { mutableStateOf(0L) }
+
+    val language = LocalAppLanguage.current
+    val context = LocalContext.current
+    val localizedContext = remember(language) { context.createLocalizedContext(language) }
 
     Column(modifier = Modifier
         .fillMaxSize()

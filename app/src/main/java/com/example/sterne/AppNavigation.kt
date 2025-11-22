@@ -1,16 +1,19 @@
 package com.example.sterne
 
+import android.content.Context
+import android.content.res.Configuration
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.myapp.LanguageDataStore
+import com.example.myapp.LocalAppLanguage
 import com.example.sterne.screen.AICallScreen
 import com.example.sterne.screen.AuthScreen
 import com.example.sterne.screen.HomeScreen
@@ -20,6 +23,8 @@ import com.example.sterne.screen.SignUpScreen
 import com.example.sterne.screen.TutorialScreen
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
+import kotlinx.coroutines.launch
+import java.util.Locale
 
 @Composable
 fun AppNavigation(modifier: Modifier = Modifier) {
@@ -28,10 +33,11 @@ fun AppNavigation(modifier: Modifier = Modifier) {
 
     val isLoggedIn = Firebase.auth.currentUser!=null
     val  firstPage = if(isLoggedIn) "home" else "auth"
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
 
-
-    val LocalAppLanguage = staticCompositionLocalOf { "en" }
-    var currentLanguage by remember { mutableStateOf("en") }
+    val currentLanguage by LanguageDataStore.getLanguage(context)
+        .collectAsState(initial = "en")
 
     CompositionLocalProvider(LocalAppLanguage provides currentLanguage) {
         NavHost(navController = navController, startDestination = firstPage){
@@ -53,7 +59,12 @@ fun AppNavigation(modifier: Modifier = Modifier) {
 
             composable("settings"){
                 SettingsScreen(modifier, navController, onToggleLanguage = {
-                    currentLanguage = if (currentLanguage == "en") "el" else "en"
+                    val newLang = if (currentLanguage == "en") "el" else "en"
+
+                    // Save persistently
+                    scope.launch {
+                        LanguageDataStore.saveLanguage(context, newLang)
+                    }
                 })
             }
 
@@ -66,4 +77,10 @@ fun AppNavigation(modifier: Modifier = Modifier) {
             }
         }
     }
+}
+
+fun Context.createLocalizedContext(languageCode: String): Context {
+    val config = Configuration(resources.configuration)
+    config.setLocale(Locale.forLanguageTag(languageCode))
+    return createConfigurationContext(config)
 }

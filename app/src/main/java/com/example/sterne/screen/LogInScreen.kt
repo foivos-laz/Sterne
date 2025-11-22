@@ -37,8 +37,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.myapp.LocalAppLanguage
 import com.example.sterne.viewmodel.AuthViewModel
 import com.example.sterne.R
+import com.example.sterne.createLocalizedContext
 
 @Composable
 fun LogInScreen(modifier: Modifier = Modifier, navController: NavController, authViewModel: AuthViewModel = viewModel()) {
@@ -49,6 +51,9 @@ fun LogInScreen(modifier: Modifier = Modifier, navController: NavController, aut
 
     var context = LocalContext.current
 
+    val language = LocalAppLanguage.current
+    val localizedContext = remember(language) { context.createLocalizedContext(language) }
+
     Column(modifier = Modifier.fillMaxSize()
         .background(Color(0xFF67282D))) {
         Column(modifier = Modifier.fillMaxSize()
@@ -56,7 +61,7 @@ fun LogInScreen(modifier: Modifier = Modifier, navController: NavController, aut
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = stringResource(id = R.string.loginText1),modifier = Modifier.fillMaxWidth(),
+            Text(text = localizedContext.getString(R.string.loginText1),modifier = Modifier.fillMaxWidth(),
                 style = TextStyle(
                     fontSize = 30.sp,
                     fontFamily = FontFamily.Monospace,
@@ -67,7 +72,7 @@ fun LogInScreen(modifier: Modifier = Modifier, navController: NavController, aut
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            Text(text = stringResource(id = R.string.loginText2),modifier = Modifier.fillMaxWidth(),
+            Text(text = localizedContext.getString(R.string.loginText2),modifier = Modifier.fillMaxWidth(),
                 style = TextStyle(
                     fontSize = 22.sp,
                     fontFamily = FontFamily.Monospace,
@@ -81,7 +86,7 @@ fun LogInScreen(modifier: Modifier = Modifier, navController: NavController, aut
             OutlinedTextField(
                 value = email,
                 onValueChange = { email = it },
-                label = { Text(text = stringResource(id = R.string.loginBox1)) },
+                label = { Text(text = localizedContext.getString(R.string.loginBox1)) },
                 modifier = Modifier.fillMaxWidth(),
                 colors = TextFieldDefaults.colors(
                     focusedIndicatorColor = Color(0xFFF6E9CF),
@@ -101,7 +106,7 @@ fun LogInScreen(modifier: Modifier = Modifier, navController: NavController, aut
             OutlinedTextField(
                 value = password,
                 onValueChange = { password = it },
-                label = { Text(text = stringResource(id = R.string.loginBox2)) },
+                label = { Text(text = localizedContext.getString(R.string.loginBox2)) },
                 modifier = Modifier.fillMaxWidth(),
                 visualTransformation = PasswordVisualTransformation(),
                 colors = TextFieldDefaults.colors(
@@ -138,7 +143,7 @@ fun LogInScreen(modifier: Modifier = Modifier, navController: NavController, aut
                 modifier = Modifier.fillMaxWidth()
                     .height(60.dp)
             ){
-                Text(text = if (isLoading) stringResource(id = R.string.loginButton2) else stringResource(id = R.string.loginButton), style = TextStyle(
+                Text(text = if (isLoading) localizedContext.getString(R.string.loginButton2) else localizedContext.getString(R.string.loginButton), style = TextStyle(
                     fontSize = 20.sp,
                     fontFamily = FontFamily.Monospace,
                     fontWeight = FontWeight.SemiBold,
@@ -154,7 +159,7 @@ fun LogInScreen(modifier: Modifier = Modifier, navController: NavController, aut
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center
             ) {
-                Text(text = stringResource(id = R.string.loginText3), style = TextStyle(
+                Text(text = localizedContext.getString(R.string.loginText3), style = TextStyle(
                     fontSize = 15.sp,
                     fontFamily = FontFamily.Monospace,
                     fontWeight = FontWeight.Thin,
@@ -165,7 +170,7 @@ fun LogInScreen(modifier: Modifier = Modifier, navController: NavController, aut
 
                 Spacer(modifier = Modifier.width(5.dp))
 
-                Text(text = stringResource(id = R.string.loginText4),
+                Text(text = localizedContext.getString(R.string.loginText4),
                     modifier = Modifier.clickable {
                         navController.navigate("signup")
                     },

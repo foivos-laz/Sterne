@@ -17,12 +17,10 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -30,6 +28,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.myapp.LocalAppLanguage
 import com.example.sterne.R
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
@@ -42,7 +41,6 @@ fun SettingsScreen(modifier: Modifier = Modifier, navController: NavController, 
     val user = Firebase.auth.currentUser
     val emailAddressChecker = user?.isEmailVerified
     var context = LocalContext.current
-    val LocalAppLanguage = staticCompositionLocalOf { "en" }
 
     val language = LocalAppLanguage.current
 
@@ -60,7 +58,7 @@ fun SettingsScreen(modifier: Modifier = Modifier, navController: NavController, 
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Text(text = stringResource(id = R.string.homePgButton2), style = TextStyle(
+            Text(text = localizedContext.getString(R.string.homePgButton2), style = TextStyle(
                 fontSize = 30.sp,
                 fontFamily = FontFamily.Monospace,
                 fontWeight = FontWeight.ExtraBold,
@@ -72,7 +70,7 @@ fun SettingsScreen(modifier: Modifier = Modifier, navController: NavController, 
             Spacer(modifier = Modifier.height(20.dp))
 
             if (emailAddressChecker == false){
-                Text(text = stringResource(id = R.string.settingsText2), style = TextStyle(
+                Text(text = localizedContext.getString(R.string.settingsText2), style = TextStyle(
                     fontSize = 15.sp,
                     fontFamily = FontFamily.Monospace,
                     fontWeight = FontWeight.Thin,
@@ -98,7 +96,7 @@ fun SettingsScreen(modifier: Modifier = Modifier, navController: NavController, 
                     modifier = Modifier.fillMaxWidth()
                         .height(40.dp)
                 ){
-                    Text(text = stringResource(id = R.string.settingsButton1), style = TextStyle(
+                    Text(text = localizedContext.getString(R.string.settingsButton1), style = TextStyle(
                         fontSize = 15.sp,
                         fontFamily = FontFamily.Monospace,
                         fontWeight = FontWeight.SemiBold,
@@ -111,7 +109,7 @@ fun SettingsScreen(modifier: Modifier = Modifier, navController: NavController, 
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            Text(text = stringResource(id = R.string.settingsText3), style = TextStyle(
+            Text(text = localizedContext.getString(R.string.settingsText3), style = TextStyle(
                 fontSize = 15.sp,
                 fontFamily = FontFamily.Monospace,
                 fontWeight = FontWeight.Thin,
@@ -133,7 +131,7 @@ fun SettingsScreen(modifier: Modifier = Modifier, navController: NavController, 
                 modifier = Modifier.fillMaxWidth()
                     .height(40.dp)
             ){
-                Text(text = stringResource(id = R.string.settingsButton2), style = TextStyle(
+                Text(text = localizedContext.getString(R.string.settingsButton2), style = TextStyle(
                     fontSize = 15.sp,
                     fontFamily = FontFamily.Monospace,
                     fontWeight = FontWeight.SemiBold,
@@ -145,7 +143,7 @@ fun SettingsScreen(modifier: Modifier = Modifier, navController: NavController, 
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            Text(text = stringResource(id = R.string.settingsText5), style = TextStyle(
+            Text(text = localizedContext.getString(R.string.settingsText5), style = TextStyle(
                 fontSize = 15.sp,
                 fontFamily = FontFamily.Monospace,
                 fontWeight = FontWeight.Thin,
@@ -163,7 +161,7 @@ fun SettingsScreen(modifier: Modifier = Modifier, navController: NavController, 
                 modifier = Modifier.fillMaxWidth()
                     .height(40.dp)
             ){
-                Text(text = stringResource(id = R.string.settingsButton4), style = TextStyle(
+                Text(text = localizedContext.getString(R.string.settingsButton4), style = TextStyle(
                     fontSize = 15.sp,
                     fontFamily = FontFamily.Monospace,
                     fontWeight = FontWeight.SemiBold,
@@ -175,7 +173,7 @@ fun SettingsScreen(modifier: Modifier = Modifier, navController: NavController, 
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            Text(text = stringResource(id = R.string.settingsText4), style = TextStyle(
+            Text(text = localizedContext.getString(R.string.settingsText4), style = TextStyle(
                 fontSize = 15.sp,
                 fontFamily = FontFamily.Monospace,
                 fontWeight = FontWeight.Thin,
@@ -195,7 +193,7 @@ fun SettingsScreen(modifier: Modifier = Modifier, navController: NavController, 
                 modifier = Modifier.fillMaxWidth()
                     .height(40.dp)
             ){
-                Text(text = stringResource(id = R.string.settingsButton3), style = TextStyle(
+                Text(text = localizedContext.getString(R.string.settingsButton3), style = TextStyle(
                     fontSize = 15.sp,
                     fontFamily = FontFamily.Monospace,
                     fontWeight = FontWeight.SemiBold,

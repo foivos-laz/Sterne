@@ -16,9 +16,11 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -28,10 +30,17 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.myapp.LocalAppLanguage
 import com.example.sterne.R
+import com.example.sterne.createLocalizedContext
 
 @Composable
 fun AuthScreen(modifier: Modifier = Modifier, navController: NavController) {
+
+    val language = LocalAppLanguage.current
+    val context = LocalContext.current
+    val localizedContext = remember(language) { context.createLocalizedContext(language) }
+
     Column(modifier = Modifier.fillMaxSize()
         .background(Color(0xFF67282D))){
         Column(
@@ -47,7 +56,7 @@ fun AuthScreen(modifier: Modifier = Modifier, navController: NavController) {
 
             //Spacer(modifier = Modifier.height(10.dp))
 
-            Text(text = stringResource(id = R.string.authText1), style = TextStyle(
+            Text(text = localizedContext.getString(R.string.authText1), style = TextStyle(
                 fontSize = 20.sp,
                 fontFamily = FontFamily.Monospace,
                 fontWeight = FontWeight.Bold,
@@ -58,7 +67,7 @@ fun AuthScreen(modifier: Modifier = Modifier, navController: NavController) {
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            Text(text = stringResource(id = R.string.authText2), style = TextStyle(
+            Text(text = localizedContext.getString(R.string.authText2), style = TextStyle(
                 fontSize = 20.sp,
                 fontFamily = FontFamily.Monospace,
                 fontWeight = FontWeight.Thin,
@@ -76,7 +85,7 @@ fun AuthScreen(modifier: Modifier = Modifier, navController: NavController) {
                 modifier = Modifier.fillMaxWidth()
                     .height(60.dp)
                 ){
-                Text(text = stringResource(id = R.string.authButton2), style = TextStyle(
+                Text(text = localizedContext.getString(R.string.authButton2), style = TextStyle(
                     fontSize = 20.sp,
                     fontFamily = FontFamily.Monospace,
                     fontWeight = FontWeight.SemiBold,
@@ -95,7 +104,7 @@ fun AuthScreen(modifier: Modifier = Modifier, navController: NavController) {
                     modifier = Modifier.fillMaxWidth()
                     .height(60.dp)
             ){
-                Text(text = stringResource(id = R.string.authButton1), style = TextStyle(
+                Text(text = localizedContext.getString(R.string.authButton1), style = TextStyle(
                     fontSize = 20.sp,
                     fontFamily = FontFamily.Monospace,
                     fontWeight = FontWeight.SemiBold,

@@ -21,7 +21,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
+import com.example.myapp.LocalAppLanguage
+import com.example.sterne.createLocalizedContext
 import com.example.sterne.pages.AISpeakPage
 import com.example.sterne.pages.HomePage
 import com.example.sterne.pages.LocationServices
@@ -29,6 +32,10 @@ import com.example.sterne.pages.PanicButtonPage
 
 @Composable
 fun HomeScreen(modifier: Modifier = Modifier, navController: NavController) {
+
+    val language = LocalAppLanguage.current
+    val context = LocalContext.current
+    val localizedContext = remember(language) { context.createLocalizedContext(language) }
 
     val navItemList = listOf(
         NavItem("Home", Icons.Default.Home),

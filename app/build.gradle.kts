@@ -66,4 +66,5 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.mapbox.maps:android-ndk27:11.16.6")
     implementation("androidx.compose.material:material-icons-extended:<compose_version>")
+    implementation("androidx.datastore:datastore-preferences:1.1.0")
 }
