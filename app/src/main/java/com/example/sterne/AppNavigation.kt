@@ -16,6 +16,7 @@ import com.example.myapp.LanguageDataStore
 import com.example.myapp.LocalAppLanguage
 import com.example.sterne.screen.AICallScreen
 import com.example.sterne.screen.AuthScreen
+import com.example.sterne.screen.DangerousAreasScreen
 import com.example.sterne.screen.HomeScreen
 import com.example.sterne.screen.LogInScreen
 import com.example.sterne.screen.SettingsScreen
@@ -81,6 +82,10 @@ fun AppNavigation(modifier: Modifier = Modifier) {
 
             composable("call") {
                 AICallScreen(modifier, navController)
+            }
+
+            composable("dangerousareas") {
+                DangerousAreasScreen(modifier, navController)
             }
         }
     }

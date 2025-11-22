@@ -1,5 +1,11 @@
 package com.example.sterne.pages
 
+import android.Manifest
+import android.content.Context
+import android.content.pm.PackageManager
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -15,6 +21,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,6 +34,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityCompat.requestPermissions
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import com.example.myapp.LocalAppLanguage
 import com.example.sterne.R
@@ -34,10 +44,58 @@ import com.example.sterne.createLocalizedContext
 
 @Composable
 fun LocationServices(modifier: Modifier = Modifier, navController: NavController) {
+    val context = LocalContext.current
 
     val language = LocalAppLanguage.current
-    val context = LocalContext.current
     val localizedContext = remember(language) { context.createLocalizedContext(language) }
+
+    val permissions = arrayOf(
+        Manifest.permission.ACCESS_FINE_LOCATION,
+        Manifest.permission.ACCESS_COARSE_LOCATION
+    )
+
+    val permissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissionsMap ->
+        // Check the result of the request
+        val fineLocationGranted = permissionsMap[Manifest.permission.ACCESS_FINE_LOCATION] == true
+        val coarseLocationGranted = permissionsMap[Manifest.permission.ACCESS_COARSE_LOCATION] == true
+
+        if (fineLocationGranted || coarseLocationGranted) {
+            Toast.makeText(context, "Location permission granted!", Toast.LENGTH_SHORT).show()
+            // You can now proceed to get the location if needed
+        } else {
+            Toast.makeText(context, "Location permission denied.", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        val allPermissionsGranted = permissions.all {
+            ContextCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED
+        }
+
+        if (!allPermissionsGranted) {
+            permissionLauncher.launch(permissions)
+        } else {
+            // Permissions are already granted, proceed with location logic
+            // Toast.makeText(context, "Location permission already granted.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun checkAndRequestPermissions(context: Context, launcher: androidx.activity.result.ActivityResultLauncher<Array<String>>) : Boolean{
+        val allPermissionsGranted = permissions.all {
+            ContextCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED
+        }
+
+        if (allPermissionsGranted) {
+            // Permissions are already granted, proceed directly
+            return true
+        } else {
+            // Permissions are not granted, launch the request dialog
+            launcher.launch(permissions)
+            return false
+        }
+    }
 
     Column(modifier = Modifier.fillMaxSize()
         .background(Color(0xFFF6E9CF))){
@@ -47,17 +105,10 @@ fun LocationServices(modifier: Modifier = Modifier, navController: NavController
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Image(painter = painterResource(id = R.drawable.hera_logo_red_transparent), contentDescription = "Logo",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(150.dp))
-
-            //Spacer(modifier = Modifier.height(10.dp))
-
-            Text(text = "Your safety all in one app", style = TextStyle(
-                fontSize = 20.sp,
+            Text(text = localizedContext.getString(R.string.locationServices), style = TextStyle(
+                fontSize = 30.sp,
                 fontFamily = FontFamily.Monospace,
-                fontWeight = FontWeight.Bold,
+                fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Center
             ),
                 color = Color(0xFF67282D)
@@ -65,8 +116,19 @@ fun LocationServices(modifier: Modifier = Modifier, navController: NavController
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            Text(text = "Explore the tutorial to see what the app offers! Tap Settings to customize everything!", style = TextStyle(
+            Text(text = localizedContext.getString(R.string.locationPgText2), style = TextStyle(
                 fontSize = 20.sp,
+                fontFamily = FontFamily.Monospace,
+                fontWeight = FontWeight.Thin,
+                textAlign = TextAlign.Center
+            ),
+                color = Color(0xFF67282D)
+            )
+
+            Spacer(modifier = Modifier.height(15.dp))
+
+            Text(text = localizedContext.getString(R.string.AICallPGText3), style = TextStyle(
+                fontSize = 12.sp,
                 fontFamily = FontFamily.Monospace,
                 fontWeight = FontWeight.Thin,
                 textAlign = TextAlign.Center
@@ -76,33 +138,77 @@ fun LocationServices(modifier: Modifier = Modifier, navController: NavController
 
             Spacer(modifier = Modifier.height(30.dp))
 
-            OutlinedButton(onClick = {
-                navController.navigate("tutorial")
+            val isInternetAvailable = isInternetAvailable(context)
+
+            val permissions = arrayOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            )
+
+            Button(onClick = {
+                if (isInternetAvailable) {
+                    navController.navigate("call")
+                }
+                else {
+                    Toast.makeText(context,   "You don't have an internet connection!", Toast.LENGTH_SHORT).show()
+                }
+
             },
-                border = BorderStroke(1.dp, Color(0xFF67282D)),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF67282D)),
                 modifier = Modifier.fillMaxWidth()
                     .height(60.dp)
             ){
-                Text(text = "Tutorial", style = TextStyle(
+                Text(text = localizedContext.getString(R.string.locationPgButton1), style = TextStyle(
                     fontSize = 20.sp,
                     fontFamily = FontFamily.Monospace,
                     fontWeight = FontWeight.SemiBold,
                     textAlign = TextAlign.Center
                 ),
-                    color = Color(0xFF67282D)
+                    color = Color(0xFFF6E9CF)
                 )
             }
 
             Spacer(modifier = Modifier.height(10.dp))
 
             Button(onClick = {
-                navController.navigate("settings")
+                if (isInternetAvailable && checkAndRequestPermissions(context, permissionLauncher)) {
+                    navController.navigate("dangerousareas")
+                }
+                else {
+                    Toast.makeText(context,   "You don't have an internet connection!", Toast.LENGTH_SHORT).show()
+                }
+
             },
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF67282D)),
                 modifier = Modifier.fillMaxWidth()
                     .height(60.dp)
             ){
-                Text(text = "Settings", style = TextStyle(
+                Text(text = localizedContext.getString(R.string.locationPgButton2), style = TextStyle(
+                    fontSize = 20.sp,
+                    fontFamily = FontFamily.Monospace,
+                    fontWeight = FontWeight.SemiBold,
+                    textAlign = TextAlign.Center
+                ),
+                    color = Color(0xFFF6E9CF)
+                )
+            }
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Button(onClick = {
+                if (isInternetAvailable) {
+                    navController.navigate("call")
+                }
+                else {
+                    Toast.makeText(context,   "You don't have an internet connection!", Toast.LENGTH_SHORT).show()
+                }
+
+            },
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF67282D)),
+                modifier = Modifier.fillMaxWidth()
+                    .height(60.dp)
+            ){
+                Text(text = localizedContext.getString(R.string.locationPgButton3), style = TextStyle(
                     fontSize = 20.sp,
                     fontFamily = FontFamily.Monospace,
                     fontWeight = FontWeight.SemiBold,

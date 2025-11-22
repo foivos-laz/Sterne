@@ -56,4 +56,12 @@
     <string name="panicPgDlgText1">Change number</string>
     <string name="panicPgDlgText2">Save</string>
     <string name="panicPgDlgText3">Cancel</string>
+    <string name="locationServices">Location Services</string>
+    <string name="locationPgButton1">Community Posts</string>
+    <string name="locationPgButton2">Dangerous Areas</string>
+    <string name="locationPgButton3">Nearest Open Stores</string>
+    <string name="locationPgText2">Choose one of the following options</string>
+    <string name="dangerousScrText1">Dangerous Areas</string>
+    <string name="dangerousScrText2">You can see on the map bellow in red the dangrous areas other users have shared in the last 24 hours</string>
+    <string name="dangerousScrButton1">Add your own</string>
 </resources>

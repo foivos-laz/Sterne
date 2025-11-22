@@ -56,4 +56,12 @@
     <string name="panicPgDlgText1">Αλλαγή νούμερου</string>
     <string name="panicPgDlgText2">Αποθήκευση</string>
     <string name="panicPgDlgText3">Ακύρωση</string>
+    <string name="locationServices">Υπηρεσίες Τοποθεσίας</string>
+    <string name="locationPgButton1">Κοινοτικές Αναρτήσεις</string>
+    <string name="locationPgButton2">Επικίνδυνες Περιοχές</string>
+    <string name="locationPgButton3">Πλησιέστερα Ανοιχτά Καταστήματα</string>
+    <string name="locationPgText2">Επιλέξτε μία από τις ακόλουθες επιλογές</string>
+    <string name="dangerousScrText1">Επικίνδυνες Περιοχές</string>
+    <string name="dangerousScrText2">Μπορείτε να δείτε στον παρακάτω χάρτη με κόκκινο χρώμα τις επικίνδυνες περιοχές που έχουν κοινοποιήσει άλλοι χρήστες τις τελευταίες 24 ώρες.</string>
+    <string name="dangerousScrButton1">Προσθέσθε την δική σας</string>
 </resources>
