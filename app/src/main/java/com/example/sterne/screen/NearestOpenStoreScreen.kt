@@ -23,11 +23,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.myapp.LocalAppLanguage
 import com.example.sterne.createLocalizedContext
 
 @Composable
-fun NeartestOpenStoreScreen(modifier: Modifier = Modifier) {
+fun NeartestOpenStoreScreen(modifier: Modifier = Modifier, navController: NavController) {
     val language = LocalAppLanguage.current
     val context = LocalContext.current
     val localizedContext = remember(language) { context.createLocalizedContext(language) }
@@ -51,7 +52,7 @@ fun NeartestOpenStoreScreen(modifier: Modifier = Modifier) {
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            Text(text = "Click the button below to log out", style = TextStyle(
+            Text(text = "By pressing the 'Find Store' button, the app will search the nearest open store and show its name and location on the map", style = TextStyle(
                 fontSize = 15.sp,
                 fontFamily = FontFamily.Monospace,
                 fontWeight = FontWeight.Thin,
@@ -62,7 +63,39 @@ fun NeartestOpenStoreScreen(modifier: Modifier = Modifier) {
 
             Spacer(modifier = Modifier.height(10.dp))
 
-            Button(onClick = {},
+            Button(onClick = {
+                navController.navigate("found")
+            },
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF67282D)),
+                modifier = Modifier.fillMaxWidth()
+                    .height(40.dp)
+            ){
+                Text(text = "Find Store", style = TextStyle(
+                    fontSize = 15.sp,
+                    fontFamily = FontFamily.Monospace,
+                    fontWeight = FontWeight.SemiBold,
+                    textAlign = TextAlign.Center
+                ),
+                    color = Color(0xFFF6E9CF)
+                )
+            }
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            Text(text = "Click the button below to go back home", style = TextStyle(
+                fontSize = 15.sp,
+                fontFamily = FontFamily.Monospace,
+                fontWeight = FontWeight.Thin,
+                textAlign = TextAlign.Center
+            ),
+                color = Color(0xFF67282D)
+            )
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Button(onClick = {
+                navController.popBackStack()
+            },
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF67282D)),
                 modifier = Modifier.fillMaxWidth()
                     .height(40.dp)

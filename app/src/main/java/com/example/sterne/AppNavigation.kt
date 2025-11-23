@@ -19,6 +19,7 @@ import com.example.sterne.screen.AICallScreen
 import com.example.sterne.screen.AuthScreen
 import com.example.sterne.screen.CommunityPostsScreen
 import com.example.sterne.screen.DangerousAreasScreen
+import com.example.sterne.screen.FoundStoreScreen
 import com.example.sterne.screen.HomeScreen
 import com.example.sterne.screen.LogInScreen
 import com.example.sterne.screen.NeartestOpenStoreScreen
@@ -102,7 +103,11 @@ fun AppNavigation(modifier: Modifier = Modifier) {
             }
 
             composable("nearest") {
-                NeartestOpenStoreScreen(modifier)
+                NeartestOpenStoreScreen(modifier, navController)
+            }
+
+            composable("found") {
+                FoundStoreScreen(modifier, navController)
             }
         }
     }

@@ -196,17 +196,17 @@ fun MapboxAndroidView1(
                 val locationPlugin = mapViewInstance.location
                 locationPlugin.updateSettings { enabled = true; pulsingEnabled = true }
 
-                if (checkLocationPermission(context)) { // This will now work correctly
+                if (checkLocationPermission(context)) {
                     locationPlugin.addOnIndicatorPositionChangedListener(listener)
                     locationPlugin.addOnIndicatorPositionChangedListener { point ->
                         mapboxMap.setCamera(CameraOptions.Builder().center(point).zoom(15.0).build())
                     }
                 }
-                updateMapWithPolygons(mapViewInstance, polygons) // This will also work
+                updateMapWithPolygons(mapViewInstance, polygons)
             }
         }
     )
-} // End of MapboxAndroidView1
+}
 
 @Composable
 fun MapScreen1(
@@ -223,9 +223,6 @@ fun MapScreen1(
     }
 }
 
-// --- FIX: MOVE HELPER FUNCTIONS OUTSIDE ---
-
-// Move updateMapWithPolygons to be a top-level function in the file
 private fun updateMapWithPolygons(mapView: MapView, polygons: List<polygonModel>) {
     val features = polygons.map { model ->
         val mapboxPoints = model.points.map { geoPoint ->
@@ -256,7 +253,6 @@ private fun updateMapWithPolygons(mapView: MapView, polygons: List<polygonModel>
     }
 }
 
-// Move checkLocationPermission to be a top-level function in the file
 private fun checkLocationPermission(context: android.content.Context): Boolean {
     return ActivityCompat.checkSelfPermission(
         context,
