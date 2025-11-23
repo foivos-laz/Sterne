@@ -25,7 +25,9 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.myapp.LocalAppLanguage
 import com.example.sterne.R
+import com.example.sterne.createLocalizedContext
 import com.example.sterne.viewmodel.CreateDangerousAreasViewModel
 import com.mapbox.geojson.Point
 import com.mapbox.maps.MapView
@@ -47,6 +49,8 @@ fun CreateDangerousAreasScreen(
     viewModel: CreateDangerousAreasViewModel = viewModel()
 ) {
     val context = LocalContext.current
+    val language = LocalAppLanguage.current
+    val localizedContext = remember(language) { context.createLocalizedContext(language) }
     val drawnPoints by viewModel.drawnPoints.collectAsState()
 
     Column(
@@ -58,7 +62,7 @@ fun CreateDangerousAreasScreen(
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = "Mark a New Area",
+            text = localizedContext.getString(R.string.drawScrText1),
             style = TextStyle(
                 fontSize = 30.sp,
                 fontFamily = FontFamily.Monospace,
@@ -71,7 +75,7 @@ fun CreateDangerousAreasScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(
-            text = "Tap on the map to draw a polygon. You need at least 3 points.",
+            text = localizedContext.getString(R.string.drawScrText2),
             style = TextStyle(
                 fontSize = 18.sp,
                 fontFamily = FontFamily.Monospace,
@@ -105,7 +109,7 @@ fun CreateDangerousAreasScreen(
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF67282D)),
                 modifier = Modifier.weight(1f)
             ) {
-                Text("Undo", color = Color(0xFFF6E9CF))
+                Text(localizedContext.getString(R.string.drawScrButton1), color = Color(0xFFF6E9CF))
             }
             Button(
                 onClick = { viewModel.clearPoints() },
@@ -113,7 +117,7 @@ fun CreateDangerousAreasScreen(
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF67282D)),
                 modifier = Modifier.weight(1f)
             ) {
-                Text("Clear", color = Color(0xFFF6E9CF))
+                Text(localizedContext.getString(R.string.drawScrButton2), color = Color(0xFFF6E9CF))
             }
         }
 
@@ -137,7 +141,7 @@ fun CreateDangerousAreasScreen(
             modifier = Modifier.fillMaxWidth().height(40.dp)
         ) {
             Text(
-                text = "Save Area",
+                text = localizedContext.getString(R.string.drawScrButton3),
                 style = TextStyle(
                     fontSize = 15.sp,
                     fontFamily = FontFamily.Monospace,
@@ -154,7 +158,7 @@ fun CreateDangerousAreasScreen(
             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF67282D)),
             modifier = Modifier.fillMaxWidth().height(40.dp)
         ){
-            Text(text = "Back", style = TextStyle(
+            Text(text = localizedContext.getString(R.string.drawScrButton4), style = TextStyle(
                 fontSize = 15.sp,
                 fontFamily = FontFamily.Monospace,
                 fontWeight = FontWeight.SemiBold,
