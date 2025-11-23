@@ -17,9 +17,11 @@ import com.example.myapp.LanguageDataStore
 import com.example.myapp.LocalAppLanguage
 import com.example.sterne.screen.AICallScreen
 import com.example.sterne.screen.AuthScreen
+import com.example.sterne.screen.CommunityPostsScreen
 import com.example.sterne.screen.DangerousAreasScreen
 import com.example.sterne.screen.HomeScreen
 import com.example.sterne.screen.LogInScreen
+import com.example.sterne.screen.NeartestOpenStoreScreen
 import com.example.sterne.screen.SettingsScreen
 import com.example.sterne.screen.SignUpScreen
 import com.example.sterne.screen.TutorialScreen
@@ -93,6 +95,14 @@ fun AppNavigation(modifier: Modifier = Modifier) {
 
             composable("createDangerousArea") {
                 CreateDangerousAreasScreen(navController = navController)
+            }
+
+            composable("community") {
+                CommunityPostsScreen(modifier)
+            }
+
+            composable("nearest") {
+                NeartestOpenStoreScreen(modifier)
             }
         }
     }

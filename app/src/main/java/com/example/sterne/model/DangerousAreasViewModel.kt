@@ -21,8 +21,6 @@ class DangerousAreasViewModel : ViewModel() {
 
                 // For distance calculation, convert the stored center GeoPoint to a Mapbox Point.
                 val centerMapboxPoint = polygon.center?.let {
-                    // --- FIX IS HERE ---
-                    // Access properties directly on the Firebase GeoPoint object.
                     Point.fromLngLat(it.longitude, it.latitude)
                 }
 
@@ -41,11 +39,4 @@ class DangerousAreasViewModel : ViewModel() {
             _polygons.value = emptyList()
         }
     }
-
-    // You might want a temporary data class for this to avoid confusion
-    data class polygonModelWithMapbox(
-        val points: List<Point>,
-        val center: Point
-    )
-
 }

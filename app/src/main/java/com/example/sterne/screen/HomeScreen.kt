@@ -14,7 +14,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -31,7 +31,7 @@ import com.example.sterne.pages.PanicButtonPage
 import com.example.sterne.R
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier, navController: NavController) {
+fun HomeScreen(modifier: Modifier = Modifier,navController: NavController) {
 
     val language = LocalAppLanguage.current
     val context = LocalContext.current
@@ -44,7 +44,7 @@ fun HomeScreen(modifier: Modifier = Modifier, navController: NavController) {
         NavItem(localizedContext.getString(R.string.homeSCRText4), Icons.Default.LocationOn),
     )
 
-    var selectedIndex by remember { mutableStateOf(0) }
+    var selectedIndex by remember { mutableIntStateOf(0) }
 
     Scaffold(bottomBar = {
         NavigationBar(

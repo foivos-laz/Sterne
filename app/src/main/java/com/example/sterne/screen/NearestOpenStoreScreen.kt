@@ -23,13 +23,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import com.example.myapp.LocalAppLanguage
 import com.example.sterne.createLocalizedContext
 
-
 @Composable
-fun TutorialScreen(modifier: Modifier = Modifier, navController: NavController) {
+fun NeartestOpenStoreScreen(modifier: Modifier = Modifier) {
     val language = LocalAppLanguage.current
     val context = LocalContext.current
     val localizedContext = remember(language) { context.createLocalizedContext(language) }
@@ -42,7 +40,7 @@ fun TutorialScreen(modifier: Modifier = Modifier, navController: NavController) 
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Text(text = "Tutorial", style = TextStyle(
+            Text(text = "Find the nearest open store", style = TextStyle(
                 fontSize = 30.sp,
                 fontFamily = FontFamily.Monospace,
                 fontWeight = FontWeight.ExtraBold,
@@ -64,11 +62,7 @@ fun TutorialScreen(modifier: Modifier = Modifier, navController: NavController) 
 
             Spacer(modifier = Modifier.height(10.dp))
 
-            Button(onClick = {
-                navController.navigate("home"){
-                    popUpTo("tutorial") {inclusive = true}
-                }
-            },
+            Button(onClick = {},
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF67282D)),
                 modifier = Modifier.fillMaxWidth()
                     .height(40.dp)

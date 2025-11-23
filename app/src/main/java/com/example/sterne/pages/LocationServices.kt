@@ -136,7 +136,7 @@ fun LocationServices(modifier: Modifier = Modifier, navController: NavController
 
             Button(onClick = {
                 if (isInternetAvailable) {
-                    navController.navigate("call")
+                    navController.navigate("community")
                 }
                 else {
                     Toast.makeText(context,   "You don't have an internet connection!", Toast.LENGTH_SHORT).show()
@@ -186,7 +186,7 @@ fun LocationServices(modifier: Modifier = Modifier, navController: NavController
 
             Button(onClick = {
                 if (isInternetAvailable) {
-                    navController.navigate("call")
+                    navController.navigate("nearest")
                 }
                 else {
                     Toast.makeText(context,   "You don't have an internet connection!", Toast.LENGTH_SHORT).show()
