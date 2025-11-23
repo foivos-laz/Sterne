@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.myapp.LocalAppLanguage
+import com.example.sterne.R
 import com.example.sterne.createLocalizedContext
 
 @Composable
@@ -41,7 +42,7 @@ fun NeartestOpenStoreScreen(modifier: Modifier = Modifier, navController: NavCon
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Text(text = "Find the nearest open store", style = TextStyle(
+            Text(text = localizedContext.getString(R.string.nearestScrText1), style = TextStyle(
                 fontSize = 30.sp,
                 fontFamily = FontFamily.Monospace,
                 fontWeight = FontWeight.ExtraBold,
@@ -52,7 +53,7 @@ fun NeartestOpenStoreScreen(modifier: Modifier = Modifier, navController: NavCon
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            Text(text = "By pressing the 'Find Store' button, the app will search the nearest open store and show its name and location on the map", style = TextStyle(
+            Text(text = localizedContext.getString(R.string.nearestScrText2), style = TextStyle(
                 fontSize = 15.sp,
                 fontFamily = FontFamily.Monospace,
                 fontWeight = FontWeight.Thin,
@@ -70,7 +71,7 @@ fun NeartestOpenStoreScreen(modifier: Modifier = Modifier, navController: NavCon
                 modifier = Modifier.fillMaxWidth()
                     .height(40.dp)
             ){
-                Text(text = "Find Store", style = TextStyle(
+                Text(text = localizedContext.getString(R.string.nearestScrButton1), style = TextStyle(
                     fontSize = 15.sp,
                     fontFamily = FontFamily.Monospace,
                     fontWeight = FontWeight.SemiBold,
@@ -82,7 +83,7 @@ fun NeartestOpenStoreScreen(modifier: Modifier = Modifier, navController: NavCon
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            Text(text = "Click the button below to go back home", style = TextStyle(
+            Text(text = localizedContext.getString(R.string.nearestScrText3), style = TextStyle(
                 fontSize = 15.sp,
                 fontFamily = FontFamily.Monospace,
                 fontWeight = FontWeight.Thin,
@@ -100,7 +101,7 @@ fun NeartestOpenStoreScreen(modifier: Modifier = Modifier, navController: NavCon
                 modifier = Modifier.fillMaxWidth()
                     .height(40.dp)
             ){
-                Text(text = "Return to Home", style = TextStyle(
+                Text(text = localizedContext.getString(R.string.nearestScrButton2), style = TextStyle(
                     fontSize = 15.sp,
                     fontFamily = FontFamily.Monospace,
                     fontWeight = FontWeight.SemiBold,

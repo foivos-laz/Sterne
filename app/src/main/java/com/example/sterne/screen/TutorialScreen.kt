@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
@@ -25,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.myapp.LocalAppLanguage
+import com.example.sterne.R
 import com.example.sterne.createLocalizedContext
 
 
@@ -42,7 +44,7 @@ fun TutorialScreen(modifier: Modifier = Modifier, navController: NavController) 
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Text(text = "Tutorial", style = TextStyle(
+            Text(text = localizedContext.getString(R.string.homePgButton1), style = TextStyle(
                 fontSize = 30.sp,
                 fontFamily = FontFamily.Monospace,
                 fontWeight = FontWeight.ExtraBold,
@@ -50,10 +52,16 @@ fun TutorialScreen(modifier: Modifier = Modifier, navController: NavController) 
             ),
                 color = Color(0xFF67282D)
             )
-
             Spacer(modifier = Modifier.height(20.dp))
 
-            Text(text = "Click the button below to log out", style = TextStyle(
+            LazyColumn(modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                //Here I put the tutorial text
+            }
+
+            Spacer(modifier = Modifier.weight(1f))
+
+            Text(text = localizedContext.getString(R.string.nearestScrText3), style = TextStyle(
                 fontSize = 15.sp,
                 fontFamily = FontFamily.Monospace,
                 fontWeight = FontWeight.Thin,
@@ -73,7 +81,7 @@ fun TutorialScreen(modifier: Modifier = Modifier, navController: NavController) 
                 modifier = Modifier.fillMaxWidth()
                     .height(40.dp)
             ){
-                Text(text = "Return to Home", style = TextStyle(
+                Text(text = localizedContext.getString(R.string.nearestScrButton2), style = TextStyle(
                     fontSize = 15.sp,
                     fontFamily = FontFamily.Monospace,
                     fontWeight = FontWeight.SemiBold,

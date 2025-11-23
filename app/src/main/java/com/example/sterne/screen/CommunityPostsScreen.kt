@@ -52,6 +52,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myapp.LocalAppLanguage
+import com.example.sterne.R
 import com.example.sterne.createLocalizedContext
 import com.example.sterne.viewmodel.CommunityViewModel
 import com.google.firebase.firestore.FirebaseFirestore
@@ -156,7 +157,7 @@ fun CommunityPostsScreen(modifier: Modifier = Modifier,  viewModel: CommunityVie
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "Community Posts", style = TextStyle(
+                text = localizedContext.getString(R.string.communityPostsScrText1), style = TextStyle(
                     fontSize = 30.sp,
                     fontFamily = FontFamily.Monospace,
                     fontWeight = FontWeight.ExtraBold,
@@ -191,7 +192,7 @@ fun CommunityPostsScreen(modifier: Modifier = Modifier,  viewModel: CommunityVie
             Spacer(modifier = Modifier.height(16.dp))
 
             Text(
-                text = "Add your own post by pressing the button below", style = TextStyle(
+                text = localizedContext.getString(R.string.communityPostsScrText2), style = TextStyle(
                     fontSize = 15.sp,
                     fontFamily = FontFamily.Monospace,
                     fontWeight = FontWeight.Thin,
@@ -210,7 +211,7 @@ fun CommunityPostsScreen(modifier: Modifier = Modifier,  viewModel: CommunityVie
                     .height(40.dp)
             ) {
                 Text(
-                    text = "Create a Post", style = TextStyle(
+                    text = localizedContext.getString(R.string.communtyPostsScrButton1), style = TextStyle(
                         fontSize = 15.sp,
                         fontFamily = FontFamily.Monospace,
                         fontWeight = FontWeight.SemiBold,
@@ -236,14 +237,14 @@ fun CommunityPostsScreen(modifier: Modifier = Modifier,  viewModel: CommunityVie
                         .padding(16.dp)
                         .fillMaxWidth()
                 ) {
-                    Text(text = "Create a Post", color = Color(0xFFF6E9CF), fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                    Text(text = localizedContext.getString(R.string.communtyPostsScrButton1), color = Color(0xFFF6E9CF), fontSize = 20.sp, fontWeight = FontWeight.Bold)
                     Spacer(modifier = Modifier.height(8.dp))
                     TextField(
                         value = inputText,
                         onValueChange = { inputText = it},
                         modifier = Modifier.fillMaxWidth(),
                         label = {
-                            Text(text = "Write your post")
+                            Text(text = localizedContext.getString(R.string.communityPostsScrText3))
                         },
                         colors = TextFieldDefaults.colors(
                             focusedIndicatorColor = Color(0xFFF6E9CF),
@@ -258,8 +259,8 @@ fun CommunityPostsScreen(modifier: Modifier = Modifier,  viewModel: CommunityVie
                         )
                     )
                     Spacer(modifier = Modifier.height(16.dp))
-                    Text(text= "By pressing 'Upload' your post will be uploaded along with your current location"
-                        , color = Color(0xFFF6E9CF), fontSize = 12.sp, textAlign = TextAlign.Center)
+                    Text(text= localizedContext.getString(R.string.communityPostsScrText4)
+                        ,color = Color(0xFFF6E9CF), fontSize = 12.sp, textAlign = TextAlign.Center)
                     Spacer(modifier = Modifier.height(8.dp))
                     Row(modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.Center){
@@ -271,7 +272,7 @@ fun CommunityPostsScreen(modifier: Modifier = Modifier,  viewModel: CommunityVie
                                 containerColor = Color(0xFFF6E9CF)
                             )
                         ) {
-                            Text(text = "Cancel", color = Color(0xFF67282D))
+                            Text(text = localizedContext.getString(R.string.communityPostsScrButton2), color = Color(0xFF67282D))
                         }
                         Spacer(modifier = Modifier.width(8.dp))
                         Button(
@@ -292,7 +293,7 @@ fun CommunityPostsScreen(modifier: Modifier = Modifier,  viewModel: CommunityVie
                                     strokeWidth = 2.dp
                                 )
                             } else {
-                                Text(text = "Upload", color = Color(0xFF67282D))
+                                Text(text = localizedContext.getString(R.string.communityPostsScrButton3), color = Color(0xFF67282D))
                             }
                         }
                     }

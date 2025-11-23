@@ -64,4 +64,26 @@
     <string name="dangerousScrText1">Dangerous Areas</string>
     <string name="dangerousScrText2">You can see on the map bellow in red the dangrous areas other users have shared in the last 24 hours</string>
     <string name="dangerousScrButton1">Add your own</string>
+    <string name="communityPostsScrText1">Community Posts</string>
+    <string name="communityPostsScrText2">Add your own posts by pressing the button below</string>
+    <string name="communtyPostsScrButton1">Create a Post</string>
+    <string name="communityPostsScrText3">Write your post</string>
+    <string name="communityPostsScrText4">By pressing \'Upload\' your post will be uploaded along with your current location</string>
+    <string name="communityPostsScrButton2">Cancel</string>
+    <string name="communityPostsScrButton3">Upload</string>
+    <string name="drawScrText1">Mark a New Area</string>
+    <string name="drawScrText2">Tap on the map to draw a polygon. You need at least 3 points.</string>
+    <string name="drawScrButton1">Undo</string>
+    <string name="drawScrButton2">Clear</string>
+    <string name="drawScrButton3">Save Area</string>
+    <string name="drawScrButton4">Back</string>
+    <string name="nearestScrText1">Find the Nearest Open Store</string>
+    <string name="nearestScrText2">By pressing the \'Find Store\' button, the app will search the nearest open store and show its name and location on the map</string>
+    <string name="nearestScrButton1">Find Store</string>
+    <string name="nearestScrText3">Click the button below to go back home</string>
+    <string name="nearestScrButton2">Return to Home</string>
+    <string name="foundScrText1">YES! STORES</string>
+    <string name="foundScrTextAddress">Leof. Kon/nou Karamanli 36, Thessaloniki 546 39</string>
+    <string name="foundScrText3">Click the button below to go back</string>
+    <string name="foundScrButton">Go Back</string>
 </resources>

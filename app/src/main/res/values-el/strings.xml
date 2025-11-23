@@ -64,4 +64,26 @@
     <string name="dangerousScrText1">Επικίνδυνες Περιοχές</string>
     <string name="dangerousScrText2">Μπορείτε να δείτε στον παρακάτω χάρτη με κόκκινο χρώμα τις επικίνδυνες περιοχές που έχουν κοινοποιήσει άλλοι χρήστες τις τελευταίες 24 ώρες.</string>
     <string name="dangerousScrButton1">Προσθέσθε την δική σας</string>
+    <string name="communityPostsScrText1">Κοινοτικές Ανακοινώσεις</string>
+    <string name="communityPostsScrText2">Προσθέστε τις δικές σας αναρτήσεις πατώντας το κουμπί παρακάτω</string>
+    <string name="communtyPostsScrButton1">Δημιουργία ανάρτησης</string>
+    <string name="communityPostsScrText3">Γράψτε την ανάρτησή σας</string>
+    <string name="communityPostsScrText4">Πατώντας «Ανάρτηση», η ανάρτησή σας θα μεταφορτωθεί μαζί με την τρέχουσα τοποθεσία σας</string>
+    <string name="communityPostsScrButton2">Ακύρωση</string>
+    <string name="communityPostsScrButton3">Ανάρτηση</string>
+    <string name="drawScrText1">Σχεδιάστε μια Νέα Περιοχή</string>
+    <string name="drawScrText2">Πατήστε στον χάρτη για να σχεδιάσετε ένα πολύγωνο. Χρειάζεστε τουλάχιστον 3 σημεία.</string>
+    <string name="drawScrButton1">Αναίρεση</string>
+    <string name="drawScrButton2">Καθαρισμός</string>
+    <string name="drawScrButton3">Αποθήκευση Περιοχής</string>
+    <string name="drawScrButton4">Επιστροφή</string>
+    <string name="nearestScrText1">Εύρεση Πλησιέστερου Ανοικτού Καταστήματος</string>
+    <string name="nearestScrText2">Πατώντας το κουμπί «Εύρεση Καταστήματος», η εφαρμογή θα αναζητήσει το πλησιέστερο ανοιχτό κατάστημα και θα εμφανίσει το όνομα και την τοποθεσία του στον χάρτη.</string>
+    <string name="nearestScrButton1">Εύρεση Καταστήματος</string>
+    <string name="nearestScrText3">Κάντε κλικ στο παρακάτω κουμπί για να επιστρέψετε στην αρχική σελίδα</string>
+    <string name="nearestScrButton2">Επιστροφή στην Αρχική</string>
+    <string name="foundScrText1">YES! STORES</string>
+    <string name="foundScrTextAddress">Λεωφ. Κων/νου Καραμανλή 36, Θεσσαλονίκη 546 39</string>
+    <string name="foundScrText3">Κάντε κλικ στο παρακάτω κουμπί για να επιστρέψετε πίσω</string>
+    <string name="foundScrButton">Επιστροφή Πίσω</string>
 </resources>

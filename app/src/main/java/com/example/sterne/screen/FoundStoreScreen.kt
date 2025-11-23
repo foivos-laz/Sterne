@@ -36,6 +36,7 @@ import androidx.core.app.ActivityCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.myapp.LocalAppLanguage
+import com.example.sterne.R
 import com.example.sterne.createLocalizedContext
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
@@ -59,7 +60,7 @@ fun FoundStoreScreen(modifier: Modifier = Modifier, navController: NavController
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Text(text = "YES! STORES", style = TextStyle(
+            Text(text = localizedContext.getString(R.string.foundScrText1), style = TextStyle(
                 fontSize = 30.sp,
                 fontFamily = FontFamily.Monospace,
                 fontWeight = FontWeight.ExtraBold,
@@ -70,7 +71,7 @@ fun FoundStoreScreen(modifier: Modifier = Modifier, navController: NavController
 
             Spacer(modifier = Modifier.height(10.dp))
 
-            Text(text = "Leof. Kon/nou Karamanli 36, Thessaloniki 546 39", style = TextStyle(
+            Text(text = localizedContext.getString(R.string.foundScrTextAddress), style = TextStyle(
                 fontSize = 15.sp,
                 fontFamily = FontFamily.Monospace,
                 fontWeight = FontWeight.Bold,
@@ -126,7 +127,7 @@ fun FoundStoreScreen(modifier: Modifier = Modifier, navController: NavController
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            Text(text = "Click the button below to go back", style = TextStyle(
+            Text(text = localizedContext.getString(R.string.foundScrText3), style = TextStyle(
                 fontSize = 15.sp,
                 fontFamily = FontFamily.Monospace,
                 fontWeight = FontWeight.Thin,
@@ -144,7 +145,7 @@ fun FoundStoreScreen(modifier: Modifier = Modifier, navController: NavController
                 modifier = Modifier.fillMaxWidth()
                     .height(40.dp)
             ){
-                Text(text = "Go back", style = TextStyle(
+                Text(text = localizedContext.getString(R.string.foundScrButton), style = TextStyle(
                     fontSize = 15.sp,
                     fontFamily = FontFamily.Monospace,
                     fontWeight = FontWeight.SemiBold,
