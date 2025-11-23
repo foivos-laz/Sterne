@@ -1,10 +1,12 @@
 package com.example.sterne.model
 
 import com.google.firebase.Timestamp
-import com.mapbox.geojson.Point
+import com.google.firebase.firestore.GeoPoint // <-- Make sure this import is here
 
 data class polygonModel(
-    val points: List<Point> = emptyList(),  // List of polygon vertices
-    val center: Point? = null,             // Centroid of the polygon
-    val createdAt: Timestamp? = null       // Server timestamp for creation
+    val points: List<GeoPoint> = emptyList(),
+    val center: GeoPoint? = null,
+    val createdAt: Timestamp? = null
 )
+
+

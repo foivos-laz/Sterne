@@ -13,28 +13,39 @@ class DangerousAreasViewModel : ViewModel() {
     private val _polygons = MutableStateFlow<List<polygonModel>>(emptyList())
     val polygons: StateFlow<List<polygonModel>> = _polygons
 
-    // Use suspend function for asynchronous work
     suspend fun fetchNearbyPolygons(userLocation: Point, radiusKm: Double = 1.0) {
-        val db = FirebaseFirestore.getInstance()
         try {
-            val snapshot = db.collection("polygons").get().await() // Use await for cleaner async code
+            val snapshot = FirebaseFirestore.getInstance().collection("polygons").get().await()
             val nearby = snapshot.documents.mapNotNull { doc ->
-                val pointsList = (doc["points"] as? List<Map<String, Any>>)?.map { p ->
-                    Point.fromLngLat(p["lng"] as Double, p["lat"] as Double)
-                } ?: return@mapNotNull null
+                val polygon = doc.toObject(polygonModel::class.java) ?: return@mapNotNull null
 
-                val centerMap = doc["center"] as? Map<String, Any>
-                val centerPoint = centerMap?.let { Point.fromLngLat(it["lng"] as Double, it["lat"] as Double) }
+                // For distance calculation, convert the stored center GeoPoint to a Mapbox Point.
+                val centerMapboxPoint = polygon.center?.let {
+                    // --- FIX IS HERE ---
+                    // Access properties directly on the Firebase GeoPoint object.
+                    Point.fromLngLat(it.longitude, it.latitude)
+                }
 
-                if (centerPoint != null) {
-                    val distanceKm = TurfMeasurement.distance(userLocation, centerPoint, TurfConstants.UNIT_KILOMETERS)
-                    if (distanceKm <= radiusKm) polygonModel(pointsList, centerPoint) else null
-                } else null
+                // Perform the distance check
+                if (centerMapboxPoint != null) {
+                    val distanceKm = TurfMeasurement.distance(userLocation, centerMapboxPoint, TurfConstants.UNIT_KILOMETERS)
+                    if (distanceKm <= radiusKm) polygon else null
+                } else {
+                    null
+                }
             }
+            // Update the StateFlow directly. The UI will react automatically.
             _polygons.value = nearby
         } catch (e: Exception) {
             // Handle exceptions, e.g., log the error
             _polygons.value = emptyList()
         }
     }
+
+    // You might want a temporary data class for this to avoid confusion
+    data class polygonModelWithMapbox(
+        val points: List<Point>,
+        val center: Point
+    )
+
 }

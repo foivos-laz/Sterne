@@ -56,6 +56,7 @@ import com.mapbox.maps.extension.style.sources.addSource
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.getSourceAs
 import com.mapbox.maps.plugin.locationcomponent.location
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlin.collections.map
 
@@ -100,19 +101,26 @@ fun DangerousAreasScreen(modifier: Modifier = Modifier, navController: NavContro
             val polygons by viewModel.polygons.collectAsState()
 
             val coroutineScope = rememberCoroutineScope()
+
+            // 2. Create the stable lambda using remember
+            val onUserLocationUpdate = remember(viewModel, coroutineScope) {
+                { userPoint: Point ->coroutineScope.launch {
+                    viewModel.fetchNearbyPolygons(userPoint)
+                }
+                    Unit // Explicitly return Unit
+                }
+            }
+
+            // 4. Pass the stable lambda to your MapScreen
             MapScreen1(
                 polygons = polygons,
-                onUserLocationUpdate = { userPoint ->
-                    coroutineScope.launch {
-                        viewModel.fetchNearbyPolygons(userPoint)
-                    }
-                }
+                onUserLocationUpdate = onUserLocationUpdate
             )
 
             Spacer(modifier = Modifier.height(20.dp))
 
             Button(onClick = {
-                navController.navigate("home"){
+                navController.navigate("createDangerousArea"){
                     popUpTo("dangerousareas") {inclusive = true}
                 }
             },
@@ -182,23 +190,23 @@ fun MapboxAndroidView1(
         factory = { mapView },
         update = { mapViewInstance ->
             val mapboxMap = mapViewInstance.mapboxMap
-            mapboxMap.loadStyle(Style.STANDARD) { style ->
+            mapboxMap.loadStyle(
+                Style.STANDARD
+            ) { style ->
                 val locationPlugin = mapViewInstance.location
                 locationPlugin.updateSettings { enabled = true; pulsingEnabled = true }
 
-                if (checkLocationPermission(context)) {
+                if (checkLocationPermission(context)) { // This will now work correctly
                     locationPlugin.addOnIndicatorPositionChangedListener(listener)
                     locationPlugin.addOnIndicatorPositionChangedListener { point ->
                         mapboxMap.setCamera(CameraOptions.Builder().center(point).zoom(15.0).build())
                     }
                 }
+                updateMapWithPolygons(mapViewInstance, polygons) // This will also work
             }
-
-            // This part updates the map with new polygons whenever the state changes
-            updateMapWithPolygons(mapViewInstance, polygons)
         }
     )
-}
+} // End of MapboxAndroidView1
 
 @Composable
 fun MapScreen1(
@@ -215,19 +223,22 @@ fun MapScreen1(
     }
 }
 
+// --- FIX: MOVE HELPER FUNCTIONS OUTSIDE ---
+
+// Move updateMapWithPolygons to be a top-level function in the file
 private fun updateMapWithPolygons(mapView: MapView, polygons: List<polygonModel>) {
-    val features = polygons.map { polygon ->
-        Feature.fromGeometry(Polygon.fromLngLats(listOf(polygon.points)))
+    val features = polygons.map { model ->
+        val mapboxPoints = model.points.map { geoPoint ->
+            Point.fromLngLat(geoPoint.longitude, geoPoint.latitude)
+        }
+        val polygonGeometry = Polygon.fromLngLats(listOf(mapboxPoints))
+        Feature.fromGeometry(polygonGeometry)
     }
     val featureCollection = FeatureCollection.fromFeatures(features)
 
-    // The code inside this lambda is guaranteed to run only when the style is loaded.
     mapView.mapboxMap.getStyle { style ->
-        // You can safely remove the 'isStyleLoaded' check.
         val source = style.getSourceAs<GeoJsonSource>("polygon-source")
-
         if (source == null) {
-            // Source and layer don't exist, so create them.
             style.addSource(
                 GeoJsonSource.Builder("polygon-source")
                     .featureCollection(featureCollection)
@@ -240,13 +251,12 @@ private fun updateMapWithPolygons(mapView: MapView, polygons: List<polygonModel>
                 }
             )
         } else {
-            // Source already exists, just update its data.
             source.featureCollection(featureCollection)
         }
     }
 }
 
-
+// Move checkLocationPermission to be a top-level function in the file
 private fun checkLocationPermission(context: android.content.Context): Boolean {
     return ActivityCompat.checkSelfPermission(
         context,
