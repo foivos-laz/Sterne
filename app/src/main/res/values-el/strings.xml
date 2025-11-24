@@ -24,7 +24,7 @@
     <string name="loginButton2">Συνδέεστε...</string>
     <string name="regButton2">Δημιουργείτε ο λογαριασμός...</string>
     <string name="homePgText2">Εξερευνήστε τον οδηγό για να δείτε τι προσφέρει η εφαρμογή! Πατήστε Ρυθμίσεις για να προσαρμόσετε τα πάντα!</string>
-    <string name="homePgButton1">Οδηγός</string>
+    <string name="homePgButton1">Οδηγοί</string>
     <string name="homePgButton2">Ρυθμίσεις</string>
     <string name="settingsText2">Για να επαληθεύσετε τη διεύθυνση email σας, κάντε κλικ στο παρακάτω κουμπί</string>
     <string name="settingsButton1">Επαλήθευση Διεύθυνσης Email</string>

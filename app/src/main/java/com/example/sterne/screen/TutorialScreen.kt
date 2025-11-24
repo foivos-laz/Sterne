@@ -54,12 +54,14 @@ fun TutorialScreen(modifier: Modifier = Modifier, navController: NavController) 
             )
             Spacer(modifier = Modifier.height(20.dp))
 
-            /*LazyColumn(modifier = Modifier.fillMaxSize(),
+            LazyColumn(modifier = Modifier
+                .weight(1f)
+                .fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                //Here I put the tutorial text
-            }*/
+                //Add here the guide text
+            }
 
-            Spacer(modifier = Modifier.weight(1f))
+            Spacer(modifier = Modifier.height(20.dp))
 
             Text(text = localizedContext.getString(R.string.nearestScrText3), style = TextStyle(
                 fontSize = 15.sp,

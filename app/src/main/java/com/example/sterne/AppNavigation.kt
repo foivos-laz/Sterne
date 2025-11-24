@@ -20,6 +20,7 @@ import com.example.sterne.screen.AuthScreen
 import com.example.sterne.screen.CommunityPostsScreen
 import com.example.sterne.screen.DangerousAreasScreen
 import com.example.sterne.screen.FoundStoreScreen
+import com.example.sterne.screen.GuideDetailsScreen
 import com.example.sterne.screen.HomeScreen
 import com.example.sterne.screen.LogInScreen
 import com.example.sterne.screen.NeartestOpenStoreScreen
@@ -108,6 +109,11 @@ fun AppNavigation(modifier: Modifier = Modifier) {
 
             composable("found") {
                 FoundStoreScreen(modifier, navController)
+            }
+
+            composable("guidesdetail"+"{uid}") {
+                var guideID = it.arguments?.getString("uid")
+                GuideDetailsScreen(modifier, guideID?:"")
             }
         }
     }

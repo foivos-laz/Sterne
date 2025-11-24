@@ -24,7 +24,7 @@
     <string name="loginButton2">Logging in...</string>
     <string name="regButton2">Creating Account...</string>
     <string name="homePgText2">Explore the guide to see what the app offers! Tap Settings to customize everything!</string>
-    <string name="homePgButton1">Guide</string>
+    <string name="homePgButton1">Guides</string>
     <string name="homePgButton2">Settings</string>
     <string name="settingsText2">To verify your email address, click the button below</string>
     <string name="settingsButton1">Verify Email Address</string>

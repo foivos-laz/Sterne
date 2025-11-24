@@ -31,6 +31,7 @@ import androidx.navigation.NavController
 import com.example.myapp.LocalAppLanguage
 import com.example.sterne.R
 import com.example.sterne.createLocalizedContext
+import com.example.sterne.views.GuideView
 
 @Composable
 fun HomePage(modifier: Modifier = Modifier, navController: NavController) {
@@ -74,23 +75,22 @@ fun HomePage(modifier: Modifier = Modifier, navController: NavController) {
                 color = Color(0xFF67282D)
             )
 
-            Spacer(modifier = Modifier.height(30.dp))
+            Spacer(modifier = Modifier.height(25.dp))
 
-            OutlinedButton(onClick = {
-                navController.navigate("tutorial")
-            },
-                border = BorderStroke(1.dp, Color(0xFF67282D)),
-                modifier = Modifier.fillMaxWidth()
-                    .height(60.dp)
-            ){
-                Text(text = localizedContext.getString(R.string.homePgButton1), style = TextStyle(
-                    fontSize = 20.sp,
-                    fontFamily = FontFamily.Monospace,
-                    fontWeight = FontWeight.SemiBold,
-                    textAlign = TextAlign.Center
-                ),
-                    color = Color(0xFF67282D)
+            Column (modifier = Modifier.fillMaxWidth()){
+                Text(text = localizedContext.getString(R.string.homePgButton1),
+                    modifier = Modifier.fillMaxWidth(),
+                    //textAlign = TextAlign.Center,
+                    style = TextStyle(
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        fontFamily = FontFamily.Monospace
+                    ), color = Color(0xFF67282D)
                 )
+
+                Spacer(modifier = Modifier.height(10.dp))
+
+                GuideView(modifier, navController)
             }
 
             Spacer(modifier = Modifier.height(10.dp))
