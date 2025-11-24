@@ -111,7 +111,7 @@ fun AppNavigation(modifier: Modifier = Modifier) {
                 FoundStoreScreen(modifier, navController)
             }
 
-            composable("guidesdetail"+"{uid}") {
+            composable("guidesdetail/{uid}") {
                 var guideID = it.arguments?.getString("uid")
                 GuideDetailsScreen(modifier, guideID?:"", navController)
             }
