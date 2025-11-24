@@ -14,6 +14,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -29,25 +31,31 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.example.myapp.LocalAppLanguage
+import com.example.sterne.R
+import com.example.sterne.createLocalizedContext
 import com.example.sterne.model.GuideModel
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 
 @Composable
-fun GuideDetailsScreen(modifier: Modifier = Modifier, guideID : String) {
+fun GuideDetailsScreen(modifier: Modifier = Modifier, guideID : String, navController : NavController) {
     var guide by remember{
         mutableStateOf(GuideModel())
     }
 
     val context = LocalContext.current
+    val language = LocalAppLanguage.current
+    val localizedContext = remember(language) { context.createLocalizedContext(language) }
 
     LaunchedEffect(key1 = Unit) {
-        val currentLanguage = context.resources.configuration.locales[0].language
-        val collectionName = if (currentLanguage == "el") {
+        val collectionName = if (language == "el") {
             "guides_gr"
         } else {
             "guides_en"
@@ -65,93 +73,119 @@ fun GuideDetailsScreen(modifier: Modifier = Modifier, guideID : String) {
             }
     }
 
-    Column(modifier = Modifier.background(Color(0xFFF6E9CF))) {
+    Column(modifier = Modifier.fillMaxSize().background(Color(0xFFF6E9CF))) {
         Card(
             modifier = Modifier.fillMaxWidth().padding(32.dp),
             shape = RoundedCornerShape(5.dp),
             elevation = CardDefaults.cardElevation(4.dp),
             border = BorderStroke(1.dp, Color(0xFF67282D)),
             colors = CardDefaults.cardColors(containerColor = Color(0xFFF6E9CF))
-        ){
+        ) {
             val scrollState = rememberScrollState()
 
             //Event Name Area, doesn't scroll with the rest
-            Column(modifier = Modifier.fillMaxSize().padding(3.dp),
+            Column(
+                modifier = Modifier.fillMaxSize().padding(3.dp),
                 verticalArrangement = Arrangement.Top,
-                horizontalAlignment = Alignment.CenterHorizontally){
-                Column(modifier = Modifier.fillMaxWidth().padding(3.dp)
-                    .background(Color(0xFFF6E9CF), shape = RoundedCornerShape(5.dp)),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Column(
+                    modifier = Modifier.fillMaxWidth().padding(3.dp)
+                        .background(Color(0xFFF6E9CF), shape = RoundedCornerShape(5.dp)),
                     verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally){
-                    Text(text = guide.name, modifier = Modifier,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = guide.name, modifier = Modifier,
                         style = TextStyle(
                             fontSize = 25.sp,
-                            fontWeight = FontWeight.SemiBold
-                        ))
+                            fontWeight = FontWeight.SemiBold,
+                            color = Color(0xFF67282D)
+                        )
+                    )
                 }
 
                 //For the rest of the events content
-                Column (
+                Column(
                     modifier = Modifier
                         .verticalScroll(scrollState)
                         .fillMaxSize()
-                        .background(Color(0xFFF6E9CF))
-                ){
+                        .background(Color(0xFFF6E9CF)),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
                     //The are of the rest of the information
-                    Column( modifier = Modifier.padding(10.dp)
-                        ,verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally) {
+                    Column(
+                        modifier = Modifier.padding(10.dp),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
                         //Description
-                        Column(modifier = Modifier.fillMaxWidth()
-                            .background(Color(0xFFF6E9CF), shape = RoundedCornerShape(10.dp)),
+                        Column(
+                            modifier = Modifier.fillMaxWidth()
+                                .background(Color(0xFFF6E9CF), shape = RoundedCornerShape(10.dp)),
                             verticalArrangement = Arrangement.Center,
-                            horizontalAlignment = Alignment.CenterHorizontally){
-                            Text(text = "Description", modifier = Modifier
-                                .background(Color(0xFF67282D), shape = RoundedCornerShape(5.dp)).fillMaxWidth(),
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Text(
+                                text = "Description", modifier = Modifier
+                                    .background(Color(0xFF67282D), shape = RoundedCornerShape(5.dp))
+                                    .fillMaxWidth(),
                                 textAlign = TextAlign.Center,
                                 style = TextStyle(
                                     fontSize = 22.sp,
                                     fontWeight = FontWeight.SemiBold,
-                                ))
+                                    color = Color(0xFFF6E9CF)
+                                )
+                            )
 
                             //Spacer(modifier = Modifier.height(10.dp))
 
-                            Text(text = guide.description, modifier = Modifier.padding(10.dp),
+                            Text(
+                                text = guide.description, modifier = Modifier.padding(10.dp),
                                 textAlign = TextAlign.Justify,
                                 style = TextStyle(
                                     fontSize = 20.sp,
-                                    fontWeight = FontWeight.Normal
-
-                                ))
+                                    fontWeight = FontWeight.Normal,
+                                    color = Color(0xFF67282D)
+                                )
+                            )
                         }
 
                         Spacer(modifier = Modifier.height(10.dp))
 
                         //Needs Internet Information
-                        Column(modifier = Modifier.fillMaxWidth()
-                            .background(Color(0xFFF6E9CF), shape = RoundedCornerShape(10.dp)),
+                        Column(
+                            modifier = Modifier.fillMaxWidth()
+                                .background(Color(0xFFF6E9CF), shape = RoundedCornerShape(10.dp)),
                             verticalArrangement = Arrangement.Center,
-                            horizontalAlignment = Alignment.CenterHorizontally) {
-                            Row(modifier = Modifier.fillMaxWidth(),
-                                verticalAlignment = Alignment.CenterVertically){
-                                Text(text = "Needs Internet: ", modifier = Modifier,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.Center,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(
+                                    text = "Needs Internet: ", modifier = Modifier,
                                     style = TextStyle(
                                         fontSize = 20.sp,
-                                    ))
+                                    )
+                                )
 
                                 Spacer(modifier = Modifier.width(10.dp))
 
-                                if (guide.needsInternet){
-                                    Text(text = "Yes", modifier = Modifier,
+                                if (guide.needsInternet) {
+                                    Text(
+                                        text = "Yes", modifier = Modifier,
                                         style = TextStyle(
                                             fontSize = 20.sp,
                                             fontWeight = FontWeight.SemiBold,
                                             color = Color(0xFF67282D)
                                         )
                                     )
-                                }
-                                else {
-                                    Text(text = "No", modifier = Modifier,
+                                } else {
+                                    Text(
+                                        text = "No", modifier = Modifier,
                                         style = TextStyle(
                                             fontSize = 20.sp,
                                             fontWeight = FontWeight.SemiBold,
@@ -165,10 +199,13 @@ fun GuideDetailsScreen(modifier: Modifier = Modifier, guideID : String) {
                         Spacer(modifier = Modifier.height(10.dp))
 
                         //Permissions Information
-                        Column(modifier = Modifier.fillMaxWidth(),
+                        Column(
+                            modifier = Modifier.fillMaxWidth(),
                             horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.Center,){
-                            Text(text = "Special Permissions: ", modifier = Modifier,
+                            verticalArrangement = Arrangement.Center,
+                        ) {
+                            Text(
+                                text = "Special Permissions: ", modifier = Modifier,
                                 style = TextStyle(
                                     fontSize = 20.sp,
                                 )
@@ -179,7 +216,7 @@ fun GuideDetailsScreen(modifier: Modifier = Modifier, guideID : String) {
                             guide.specialPermissions.forEach { permission ->
                                 Text(
                                     text = permission,
-                                    modifier = Modifier.padding(start = 16.dp),
+                                    textAlign = TextAlign.Center,
                                     style = TextStyle(
                                         fontSize = 18.sp,
                                         fontWeight = FontWeight.Normal,
@@ -192,26 +229,32 @@ fun GuideDetailsScreen(modifier: Modifier = Modifier, guideID : String) {
                         Spacer(modifier = Modifier.height(20.dp))
 
                         //Functionality Information
-                        Row(modifier = Modifier.fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically){
-                            Text(text = "Needs Internet: ", modifier = Modifier,
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.Center,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = "Functionality: ", modifier = Modifier,
                                 style = TextStyle(
                                     fontSize = 20.sp,
-                                ))
+                                )
+                            )
 
                             Spacer(modifier = Modifier.width(10.dp))
 
-                            if (guide.functionality){
-                                Text(text = "Fully", modifier = Modifier,
+                            if (guide.functionality) {
+                                Text(
+                                    text = "Fully", modifier = Modifier,
                                     style = TextStyle(
                                         fontSize = 20.sp,
                                         fontWeight = FontWeight.SemiBold,
                                         color = Color(0xFF67282D)
                                     )
                                 )
-                            }
-                            else {
-                                Text(text = "Partially", modifier = Modifier,
+                            } else {
+                                Text(
+                                    text = "Partially", modifier = Modifier,
                                     style = TextStyle(
                                         fontSize = 20.sp,
                                         fontWeight = FontWeight.SemiBold,

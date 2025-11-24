@@ -113,7 +113,7 @@ fun AppNavigation(modifier: Modifier = Modifier) {
 
             composable("guidesdetail"+"{uid}") {
                 var guideID = it.arguments?.getString("uid")
-                GuideDetailsScreen(modifier, guideID?:"")
+                GuideDetailsScreen(modifier, guideID?:"", navController)
             }
         }
     }
