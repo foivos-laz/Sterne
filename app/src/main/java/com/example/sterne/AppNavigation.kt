@@ -9,7 +9,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -26,9 +25,7 @@ import com.example.sterne.screen.LogInScreen
 import com.example.sterne.screen.NeartestOpenStoreScreen
 import com.example.sterne.screen.SettingsScreen
 import com.example.sterne.screen.SignUpScreen
-import com.example.sterne.screen.TutorialScreen
 import com.example.sterne.ui.screens.CreateDangerousAreasScreen
-import com.example.sterne.viewmodel.CreateDangerousAreasViewModel
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import kotlinx.coroutines.launch
@@ -82,11 +79,6 @@ fun AppNavigation(modifier: Modifier = Modifier) {
                     }
                 })
             }
-
-            composable("tutorial"){
-                TutorialScreen(modifier, navController)
-            }
-
             composable("call") {
                 AICallScreen(modifier, navController)
             }
@@ -113,7 +105,7 @@ fun AppNavigation(modifier: Modifier = Modifier) {
 
             composable("guidesdetail/{uid}") {
                 var guideID = it.arguments?.getString("uid")
-                GuideDetailsScreen(modifier, guideID?:"", navController)
+                GuideDetailsScreen(modifier, guideID?:"")
             }
         }
     }

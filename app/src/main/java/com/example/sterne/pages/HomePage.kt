@@ -53,8 +53,6 @@ fun HomePage(modifier: Modifier = Modifier, navController: NavController) {
                     .fillMaxWidth()
                     .height(150.dp))
 
-            //Spacer(modifier = Modifier.height(10.dp))
-
             Text(text = localizedContext.getString(R.string.authText1), style = TextStyle(
                 fontSize = 20.sp,
                 fontFamily = FontFamily.Monospace,
@@ -80,7 +78,7 @@ fun HomePage(modifier: Modifier = Modifier, navController: NavController) {
             Column (modifier = Modifier.fillMaxWidth()){
                 Text(text = localizedContext.getString(R.string.homePgButton1),
                     modifier = Modifier.fillMaxWidth(),
-                    //textAlign = TextAlign.Center,
+                    textAlign = TextAlign.Center,
                     style = TextStyle(
                         fontSize = 20.sp,
                         fontWeight = FontWeight.SemiBold,

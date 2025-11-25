@@ -86,4 +86,12 @@
     <string name="foundScrTextAddress">Λεωφ. Κων/νου Καραμανλή 36, Θεσσαλονίκη 546 39</string>
     <string name="foundScrText3">Κάντε κλικ στο παρακάτω κουμπί για να επιστρέψετε πίσω</string>
     <string name="foundScrButton">Επιστροφή Πίσω</string>
+    <string name="guideDetailText1">Περιγραφή</string>
+    <string name="guideDetailText2">Ανάγκη από Internet:</string>
+    <string name="guideDetailsText3">Ειδικά Δικαιώματα:</string>
+    <string name="guideDetailsText4">Λειτουργικότητα:</string>
+    <string name="guideDetailsText5">Πλήρως</string>
+    <string name="guideDetailsText6">Μερικώς</string>
+    <string name="guideDetailsText7">Ναι</string>
+    <string name="guideDetailsText8">Όχι</string>
 </resources>

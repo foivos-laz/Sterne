@@ -85,4 +85,12 @@
     <string name="foundScrTextAddress">Leof. Kon/nou Karamanli 36, Thessaloniki 546 39</string>
     <string name="foundScrText3">Click the button below to go back</string>
     <string name="foundScrButton">Go Back</string>
+    <string name="guideDetailText1">Description</string>
+    <string name="guideDetailText2">Needs Internet:</string>
+    <string name="guideDetailsText3">Special Permissions:</string>
+    <string name="guideDetailsText4">Functionality:</string>
+    <string name="guideDetailsText5">Fully</string>
+    <string name="guideDetailsText6">Partially</string>
+    <string name="guideDetailsText7">Yes</string>
+    <string name="guideDetailsText8">No</string>
 </resources>

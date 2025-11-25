@@ -14,11 +14,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -31,12 +28,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import com.example.myapp.LocalAppLanguage
 import com.example.sterne.R
 import com.example.sterne.createLocalizedContext
@@ -45,7 +40,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 
 @Composable
-fun GuideDetailsScreen(modifier: Modifier = Modifier, guideID : String, navController : NavController) {
+fun GuideDetailsScreen(modifier: Modifier = Modifier, guideID : String) {
     var guide by remember{
         mutableStateOf(GuideModel())
     }
@@ -100,6 +95,7 @@ fun GuideDetailsScreen(modifier: Modifier = Modifier, guideID : String, navContr
                         style = TextStyle(
                             fontSize = 25.sp,
                             fontWeight = FontWeight.SemiBold,
+                            textAlign = TextAlign.Center,
                             color = Color(0xFF67282D)
                         )
                     )
@@ -127,7 +123,7 @@ fun GuideDetailsScreen(modifier: Modifier = Modifier, guideID : String, navContr
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             Text(
-                                text = "Description", modifier = Modifier
+                                text = localizedContext.getString(R.string.guideDetailText1), modifier = Modifier
                                     .background(Color(0xFF67282D), shape = RoundedCornerShape(5.dp))
                                     .fillMaxWidth(),
                                 textAlign = TextAlign.Center,
@@ -142,7 +138,7 @@ fun GuideDetailsScreen(modifier: Modifier = Modifier, guideID : String, navContr
 
                             Text(
                                 text = guide.description, modifier = Modifier.padding(10.dp),
-                                textAlign = TextAlign.Justify,
+                                textAlign = TextAlign.Center,
                                 style = TextStyle(
                                     fontSize = 20.sp,
                                     fontWeight = FontWeight.Normal,
@@ -166,9 +162,10 @@ fun GuideDetailsScreen(modifier: Modifier = Modifier, guideID : String, navContr
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
                                 Text(
-                                    text = "Needs Internet: ", modifier = Modifier,
+                                    text = localizedContext.getString(R.string.guideDetailText2), modifier = Modifier,
                                     style = TextStyle(
                                         fontSize = 20.sp,
+                                        color = Color.DarkGray
                                     )
                                 )
 
@@ -176,7 +173,7 @@ fun GuideDetailsScreen(modifier: Modifier = Modifier, guideID : String, navContr
 
                                 if (guide.needsInternet) {
                                     Text(
-                                        text = "Yes", modifier = Modifier,
+                                        text = localizedContext.getString(R.string.guideDetailsText7), modifier = Modifier,
                                         style = TextStyle(
                                             fontSize = 20.sp,
                                             fontWeight = FontWeight.SemiBold,
@@ -185,7 +182,7 @@ fun GuideDetailsScreen(modifier: Modifier = Modifier, guideID : String, navContr
                                     )
                                 } else {
                                     Text(
-                                        text = "No", modifier = Modifier,
+                                        text = localizedContext.getString(R.string.guideDetailsText8), modifier = Modifier,
                                         style = TextStyle(
                                             fontSize = 20.sp,
                                             fontWeight = FontWeight.SemiBold,
@@ -205,9 +202,10 @@ fun GuideDetailsScreen(modifier: Modifier = Modifier, guideID : String, navContr
                             verticalArrangement = Arrangement.Center,
                         ) {
                             Text(
-                                text = "Special Permissions: ", modifier = Modifier,
+                                text = localizedContext.getString(R.string.guideDetailsText3), modifier = Modifier,
                                 style = TextStyle(
                                     fontSize = 20.sp,
+                                    color = Color.DarkGray
                                 )
                             )
 
@@ -235,9 +233,10 @@ fun GuideDetailsScreen(modifier: Modifier = Modifier, guideID : String, navContr
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Text(
-                                text = "Functionality: ", modifier = Modifier,
+                                text = localizedContext.getString(R.string.guideDetailsText4), modifier = Modifier,
                                 style = TextStyle(
                                     fontSize = 20.sp,
+                                    color = Color.DarkGray
                                 )
                             )
 
@@ -245,7 +244,7 @@ fun GuideDetailsScreen(modifier: Modifier = Modifier, guideID : String, navContr
 
                             if (guide.functionality) {
                                 Text(
-                                    text = "Fully", modifier = Modifier,
+                                    text = localizedContext.getString(R.string.guideDetailsText5), modifier = Modifier,
                                     style = TextStyle(
                                         fontSize = 20.sp,
                                         fontWeight = FontWeight.SemiBold,
@@ -254,7 +253,7 @@ fun GuideDetailsScreen(modifier: Modifier = Modifier, guideID : String, navContr
                                 )
                             } else {
                                 Text(
-                                    text = "Partially", modifier = Modifier,
+                                    text = localizedContext.getString(R.string.guideDetailsText6), modifier = Modifier,
                                     style = TextStyle(
                                         fontSize = 20.sp,
                                         fontWeight = FontWeight.SemiBold,
