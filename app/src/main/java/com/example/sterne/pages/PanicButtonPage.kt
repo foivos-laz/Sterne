@@ -1,6 +1,7 @@
 package com.example.sterne.pages
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -8,9 +9,13 @@ import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -26,6 +31,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -46,6 +52,7 @@ import com.example.sterne.R
 import com.example.sterne.createLocalizedContext
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.draw.clip
 import com.example.sterne.DataStore.getPhoneNumber
 import com.example.sterne.DataStore.savePhoneNumber
 import kotlinx.coroutines.CoroutineScope
@@ -73,6 +80,54 @@ fun PanicButtonPage(modifier: Modifier = Modifier) {
             // Permission granted, perform the desired action
         } else {
             Toast.makeText(context, "Permission denied", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    val permissions = arrayOf(
+        Manifest.permission.ACCESS_FINE_LOCATION,
+        Manifest.permission.ACCESS_COARSE_LOCATION
+    )
+
+    val permissionLauncher1 = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissionsMap ->
+        // Check the result of the request
+        val fineLocationGranted = permissionsMap[Manifest.permission.ACCESS_FINE_LOCATION] == true
+        val coarseLocationGranted = permissionsMap[Manifest.permission.ACCESS_COARSE_LOCATION] == true
+
+        if (fineLocationGranted || coarseLocationGranted) {
+            Toast.makeText(context, "Location permission granted!", Toast.LENGTH_SHORT).show()
+            // You can now proceed to get the location if needed
+        } else {
+            Toast.makeText(context, "Location permission denied.", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        val allPermissionsGranted = permissions.all {
+            ContextCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED
+        }
+
+        if (!allPermissionsGranted) {
+            permissionLauncher1.launch(permissions)
+        } else {
+            // Permissions are already granted, proceed with location logic
+            // Toast.makeText(context, "Location permission already granted.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun checkAndRequestPermissions(context: Context, launcher: androidx.activity.result.ActivityResultLauncher<Array<String>>) : Boolean{
+        val allPermissionsGranted = permissions.all {
+            ContextCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED
+        }
+
+        if (allPermissionsGranted) {
+            // Permissions are already granted, proceed directly
+            return true
+        } else {
+            // Permissions are not granted, launch the request dialog
+            launcher.launch(permissions)
+            return false
         }
     }
 
@@ -115,32 +170,51 @@ fun PanicButtonPage(modifier: Modifier = Modifier) {
                 color = Color(0xFF67282D)
             )
 
+            Spacer(modifier = Modifier.height(15.dp))
+
+            Text(text = localizedContext.getString(R.string.panicPgText5), style = TextStyle(
+                fontSize = 12.sp,
+                fontFamily = FontFamily.Monospace,
+                fontWeight = FontWeight.Thin,
+                textAlign = TextAlign.Center
+            ),
+                color = Color(0xFF67282D)
+            )
+
             Spacer(modifier = Modifier.height(30.dp))
 
-            Button(onClick = {
-                if (ContextCompat.checkSelfPermission(context, callPermission)
-                    == PackageManager.PERMISSION_GRANTED
-                ) {
-                    val intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:$phoneNumber"))
-                    context.startActivity(intent)
-                } else {
-                    permissionLauncher.launch(callPermission)
-                }
-            },
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF67282D)),
-                shape = CircleShape,
-                border = BorderStroke(
-                    width = 3.dp,
-                    color = Color(0xFF8E3A3F)
-                ),
-                modifier = Modifier.size(200.dp)
-            ){
-                Text(text = localizedContext.getString(R.string.panicPgText1), style = TextStyle(
-                    fontSize = 20.sp,
-                    fontFamily = FontFamily.Monospace,
-                    fontWeight = FontWeight.SemiBold,
-                    textAlign = TextAlign.Center
-                ),
+            @OptIn(ExperimentalFoundationApi::class)
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .size(200.dp)
+                    .clip(CircleShape) // Ensures the ripple effect is circular
+                    .background(Color(0xFF67282D))
+                    .border(BorderStroke(3.dp, Color(0xFF8E3A3F)), CircleShape)
+                    .combinedClickable(
+                        onClick = {
+                            /* Handle normal click if needed */
+                        },
+                        onLongClick = {
+                            // Your call logic moved here
+                            if (ContextCompat.checkSelfPermission(context, callPermission)
+                                == PackageManager.PERMISSION_GRANTED) {
+                                val intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:$phoneNumber"))
+                                context.startActivity(intent)
+                            } else {
+                                permissionLauncher.launch(callPermission)
+                            }
+                        }
+                    )
+            ) {
+                Text(
+                    text = localizedContext.getString(R.string.panicPgText1),
+                    style = TextStyle(
+                        fontSize = 20.sp,
+                        fontFamily = FontFamily.Monospace,
+                        fontWeight = FontWeight.SemiBold,
+                        textAlign = TextAlign.Center
+                    ),
                     color = Color(0xFFF6E9CF)
                 )
             }
